@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --color-primary:       #575799;
+  --color-primary-dark:  #3f3f70;
+  --color-dark:          #090933;
+  --color-light1:        #DDDDFF;
+  --color-light2:        #D3D3FF;
+  --color-light3:        #F1F1FF;
+  --color-white:         #FFFFFF;
+  --color-error:         #e74c3c;
+  --color-error-bg:      #fff1f1;
+  --color-error-border:  #ff5a5a;
+  --color-success:       #27ae60;
+  --color-success-bg:    #eafaf1;
+  --color-text:          #090933;
+  --color-text-muted:    #888888;
+  --color-placeholder:   #aaaaaa;
+  --color-border:        #090933;
+  --color-border-soft:   #c8c8e8;
+
+  --shadow-sm:  0 1px  4px rgba(9,9,51,0.08);
+  --shadow-md:  0 2px 12px rgba(9,9,51,0.12);
+  --shadow-lg:  0 4px 24px rgba(9,9,51,0.18);
+  --shadow-xl:  0 8px 40px rgba(9,9,51,0.22);
+
+  --overlay-color: rgba(9,9,51,0.40);
+
+  --sp-1:  0.25rem;
+  --sp-2:  0.5rem;
+  --sp-3:  0.75rem;
+  --sp-4:  1rem;
+  --sp-5:  1.25rem;
+  --sp-6:  1.5rem;
+  --sp-7:  1.75rem;
+  --sp-8:  2rem;
+  --sp-10: 2.5rem;
+  --sp-12: 3rem;
+
+  --radius-xs:   0.25rem;
+  --radius-sm:   0.5rem;
+  --radius-md:   0.75rem;
+  --radius-lg:   1rem;
+  --radius-xl:   1.25rem;
+  --radius-pill: 9999px;
+
+  --font: 'Inter', sans-serif;
+  --font-size-xs:   0.6875rem;
+  --font-size-sm:   0.8125rem;
+  --font-size-base: 0.875rem;
+  --font-size-md:   0.9375rem;
+  --font-size-lg:   1rem;
+  --font-size-xl:   1.125rem;
+  --font-size-2xl:  1.25rem;
+
+  --navbar-height: 3.875rem;
+
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.20s ease;
+
+  --z-navbar:   100;
+  --z-dropdown: 300;
+  --z-modal:    500;
+}

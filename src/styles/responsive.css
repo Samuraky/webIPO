@@ -1,0 +1,39 @@
+/* ─── TABLET (≤ 700px) ─── */
+@media (max-width: 43.75em) {
+  .hero {
+    min-height:          420px;
+    background-position: 62% center;
+  }
+  .hero-content {
+    margin-left:  24px;
+    margin-right: 24px;
+    max-width:    360px;
+  }
+  .dashboard-info-row { flex-direction: column; }
+  .auth-card          { padding: var(--sp-6) var(--sp-4); }
+  .page-content       { padding: var(--sp-4) 0.625rem var(--sp-10); }
+  .navbar             { padding: 0 0.875rem; }
+  .truck-info-card .tic-grid { grid-template-columns: 1fr; }
+  .truck-img-wrap { width: 100%; height: 9.375rem; }
+  .action-buttons { flex-direction: column; align-items: center; }
+  .btn--confirm,
+  .btn--cancel-op { min-width: unset; width: 100%; max-width: 22.5rem; }
+  .data-table-wrapper { overflow-x: auto; }
+  .features-row { gap: 30px; margin-top: 50px; }
+}
+
+/* ─── MÒBIL (≤ 480px) ─── */
+@media (max-width: 30em) {
+  .navbar__logo-text { display: none; }
+  .auth-card {
+    padding:       40px 24px 36px;
+    border-radius: 28px;
+  }
+  .auth-title  { font-size: 26px; }
+  .form-label  { font-size: 16px; }
+  .modal-box   { padding: var(--sp-6) var(--sp-5); }
+  .page-title-bar { grid-template-columns: auto 1fr; }
+  .page-title-bar h2 { font-size: var(--font-size-lg); white-space: normal; }
+  .features-section { padding: 40px 20px 60px; }
+  .feature-card { width: 100%; max-width: 300px; }
+}

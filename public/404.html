@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>webIPO</title>
+    <script>
+      var seg = window.location.pathname.replace('/webIPO', '').replace(/\/([^/?#]*).*/, '$1');
+      var query = window.location.search.slice(1);
+      var hash  = window.location.hash;
+      window.location.replace(
+        window.location.origin + '/webIPO/' +
+        '?p=/' + (seg ? encodeURIComponent(seg) : '') +
+        (query ? '&q=' + query : '') +
+        hash
+      );
+    </script>
+  </head>
+  <body></body>
+</html>
