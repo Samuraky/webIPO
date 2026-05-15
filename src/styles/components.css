@@ -26,7 +26,7 @@
   transition:      opacity var(--transition-base);
 }
 .navbar-brand:hover { opacity: 0.9; }
-.navbar-brand img { height: 38px; width: auto; filter: brightness(0) invert(1); }
+.navbar-brand img { height: 48px; width: auto; filter: brightness(0) invert(1); }
 .navbar-brand-text { color: var(--color-white); }
 
 .navbar-actions {
@@ -52,9 +52,10 @@
   font-family:     var(--font);
 }
 .btn-navbar-login:hover {
-  background:   rgba(255,255,255,0.15);
-  border-color: var(--color-white);
-  opacity:      1;
+  background:      rgba(255,255,255,0.15);
+  border-color:    var(--color-white);
+  opacity:         1;
+  text-decoration: none;
 }
 
 /* ─── LANGUAGE DROPDOWN ─── */
@@ -794,12 +795,12 @@ input[type="number"].no-spin { -moz-appearance: textfield; appearance: textfield
 
 /* ─── AUTH CARD ─── */
 .auth-card {
-  width:          540px;
+  width:          460px;
   max-width:      95vw;
   background:     var(--color-white);
   border:         2px solid var(--color-primary);
-  border-radius:  2.625rem;
-  padding:        clamp(2rem,6vh,4.375rem) clamp(1.5rem,8vw,4.5rem) clamp(1.75rem,5vh,4.125rem);
+  border-radius:  2rem;
+  padding:        32px 36px 28px;
   box-shadow:     var(--shadow-xl);
   box-sizing:     border-box;
   display:        flex;
@@ -808,18 +809,18 @@ input[type="number"].no-spin { -moz-appearance: textfield; appearance: textfield
 }
 .auth-card form { width: 100%; }
 .auth-icon {
-  width:           82px; height: 82px;
+  width:           64px; height: 64px;
   border-radius:   50%;
   background:      var(--color-light2);
   color:           var(--color-primary);
   display:         flex; justify-content: center; align-items: center;
-  font-size:       2.625rem;
-  margin-bottom:   1.125rem;
+  font-size:       2rem;
+  margin-bottom:   0.875rem;
   flex-shrink:     0;
 }
 .auth-title {
   text-align: center; color: var(--color-primary);
-  font-size: 1.875rem; font-weight: 700; margin-bottom: 1.75rem;
+  font-size: 1.5rem; font-weight: 700; margin-bottom: 1.25rem;
 }
 .auth-card a { color: var(--color-primary); font-weight: 500; }
 

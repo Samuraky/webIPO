@@ -80,7 +80,7 @@ function ForgotPassword() {
             <Link
               to="/login"
               className="btn btn--outline btn--block"
-              style={{ marginTop: '2.5rem', textDecoration: 'none', height: '52px', fontSize: '18px', fontWeight: 700, borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              style={{ marginTop: '0.75rem', textDecoration: 'none', height: '52px', fontSize: '18px', fontWeight: 700, borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
               {tx.forgot_cancel}
             </Link>
