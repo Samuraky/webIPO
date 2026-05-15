@@ -91,7 +91,7 @@ function Login({ onLogin }) {
             </div>
 
             <button type="submit" className="btn btn--primary btn--block"
-              style={{ marginTop: '24px', height: '52px', fontSize: '18px', fontWeight: 700, borderRadius: '10px' }}>
+              style={{ marginTop: '18px', height: '44px', fontSize: '15px', fontWeight: 700, borderRadius: '10px' }}>
               {tx.login_btn}
             </button>
           </form>

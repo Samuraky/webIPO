@@ -413,7 +413,7 @@
 
 .form-label {
   display:       block;
-  font-size:     1.25rem;
+  font-size:     0.9375rem;
   font-weight:   600;
   color:         #5f59bf;
   margin-bottom: 0.375rem;
@@ -421,13 +421,13 @@
 .form-label--dark { color: var(--color-dark); }
 
 .input-wrapper {
-  height:        64px;
+  height:        48px;
   border:        1.8px solid #7067d6;
-  border-radius: 14px;
+  border-radius: 12px;
   background:    #f8f8f8;
   display:       flex;
   align-items:   center;
-  padding:       0 18px;
+  padding:       0 14px;
   transition:    all var(--transition-base);
 }
 .input-wrapper:focus-within {
@@ -440,9 +440,9 @@
 }
 .iw-icon {
   color:        #8c86d8;
-  font-size:    var(--font-size-xl);
+  font-size:    var(--font-size-lg);
   flex-shrink:  0;
-  margin-right: 14px;
+  margin-right: 10px;
   display:      flex;
   align-items:  center;
 }
@@ -452,7 +452,7 @@
   border:      none;
   outline:     none;
   font-family: var(--font);
-  font-size:   18px;
+  font-size:   15px;
   color:       var(--color-dark);
   background:  transparent;
 }
@@ -795,12 +795,12 @@ input[type="number"].no-spin { -moz-appearance: textfield; appearance: textfield
 
 /* ─── AUTH CARD ─── */
 .auth-card {
-  width:          460px;
+  width:          400px;
   max-width:      95vw;
   background:     var(--color-white);
   border:         2px solid var(--color-primary);
-  border-radius:  2rem;
-  padding:        32px 36px 28px;
+  border-radius:  1.5rem;
+  padding:        24px 28px 20px;
   box-shadow:     var(--shadow-xl);
   box-sizing:     border-box;
   display:        flex;
@@ -809,18 +809,18 @@ input[type="number"].no-spin { -moz-appearance: textfield; appearance: textfield
 }
 .auth-card form { width: 100%; }
 .auth-icon {
-  width:           64px; height: 64px;
+  width:           52px; height: 52px;
   border-radius:   50%;
   background:      var(--color-light2);
   color:           var(--color-primary);
   display:         flex; justify-content: center; align-items: center;
-  font-size:       2rem;
-  margin-bottom:   0.875rem;
+  font-size:       1.625rem;
+  margin-bottom:   0.625rem;
   flex-shrink:     0;
 }
 .auth-title {
   text-align: center; color: var(--color-primary);
-  font-size: 1.5rem; font-weight: 700; margin-bottom: 1.25rem;
+  font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;
 }
 .auth-card a { color: var(--color-primary); font-weight: 500; }
 
