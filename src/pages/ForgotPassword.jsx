@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Lock, User, AlertCircle } from 'lucide-react';
+import { Lock, User, AlertCircle, CircleCheckBig } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import { useLang } from '../context/LangContext';
 import { t } from '../i18n/translations';
@@ -92,13 +92,17 @@ function ForgotPassword() {
       {showModal && (
         <div className="modal-backdrop">
           <div className="modal-box">
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
+              <CircleCheckBig size={48} color="var(--color-primary)" />
+            </div>
             <p className="modal-title">{tx.forgot_modal}</p>
             <div className="modal-actions">
               <button
-                className="btn btn--primary"
+                className="btn--confirm btn--field-shape"
                 onClick={() => navigate('/')}
+                style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
               >
-                {tx.btn_ok}
+                <CircleCheckBig size={20} /> {tx.btn_ok}
               </button>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Play, Pause, AlertCircle, CheckCircle, CirclePlay, Navigation, MapPin, Calendar, Truck, X, Search, Filter, Package, Scale } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play, Pause, AlertCircle, CheckCircle, CircleCheckBig, CirclePlay, Navigation, MapPin, Calendar, Truck, X, Search, Filter, Package, Scale } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import { trucks, transports as allTransports } from '../data/mockData';
 import { useLang } from '../context/LangContext';
@@ -577,11 +577,18 @@ function DriverDashboard({ user, driverState, setDriverState, onLogout }) {
       {/* ── Modal assignació ── */}
       {showModal && pendingTransport && (
         <div className="modal-backdrop">
-          <div className="modal-box">
+          <div className="modal-box" style={{ width: '500px', maxWidth: '90vw' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
+              <AlertCircle size={48} color="var(--color-primary)" />
+            </div>
             <p className="modal-title">{tx.modal_assign_q}</p>
             <div className="modal-actions">
-              <button className="btn btn--primary" onClick={handleConfirmAssign}>{tx.modal_yes}</button>
-              <button className="btn btn--outline" onClick={() => setShowModal(false)}>{tx.modal_no}</button>
+              <button className="btn--confirm btn--field-shape" onClick={handleConfirmAssign} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <CircleCheckBig size={20} /> {tx.modal_yes}
+              </button>
+              <button className="btn--cancel-op btn--field-shape" onClick={() => setShowModal(false)} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <X size={20} /> {tx.modal_no}
+              </button>
             </div>
           </div>
         </div>

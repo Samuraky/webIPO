@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, Info, AlertCircle, Truck, Gauge } from 'lucide-react';
+import { ChevronLeft, Info, AlertCircle, Truck, Gauge, CircleCheckBig, X } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import { useLang } from '../context/LangContext';
 import { t } from '../i18n/translations';
@@ -184,10 +184,17 @@ function CancelTransport({ user, driverState, setDriverState, onLogout }) {
       {showModal && (
         <div className="modal-backdrop">
           <div className="modal-box">
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
+              <AlertCircle size={48} color="var(--color-primary)" />
+            </div>
             <p className="modal-title">{tx.cancel_modal_q}</p>
             <div className="modal-actions">
-              <button className="btn--confirm" onClick={handleConfirm}>{tx.modal_yes}</button>
-              <button className="btn--cancel" onClick={() => setShowModal(false)}>{tx.modal_no}</button>
+              <button className="btn--confirm btn--field-shape" onClick={handleConfirm} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <CircleCheckBig size={20} /> {tx.modal_yes}
+              </button>
+              <button className="btn--cancel-op btn--field-shape" onClick={() => setShowModal(false)} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <X size={20} /> {tx.modal_no}
+              </button>
             </div>
           </div>
         </div>
@@ -196,9 +203,14 @@ function CancelTransport({ user, driverState, setDriverState, onLogout }) {
       {showDoneModal && (
         <div className="modal-backdrop">
           <div className="modal-box">
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
+              <CircleCheckBig size={48} color="var(--color-primary)" />
+            </div>
             <p className="modal-title">{tx.cancel_done}</p>
             <div className="modal-actions">
-              <button className="btn--confirm" onClick={handleDone}>{tx.btn_ok}</button>
+              <button className="btn--confirm btn--field-shape" onClick={handleDone} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <CircleCheckBig size={20} /> {tx.btn_ok}
+              </button>
             </div>
           </div>
         </div>
