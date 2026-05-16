@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, Info, AlertCircle, Truck, Gauge, CircleCheckBig, X } from 'lucide-react';
 import Navbar from '../components/Navbar';
@@ -25,7 +25,20 @@ function CancelTransport({ user, driverState, setDriverState, onLogout }) {
   const [showDoneModal, setShowDoneModal] = useState(false);
   const [done, setDone] = useState(false);
   const [errMsg, setErrMsg] = useState('');
+  const [infoMsg, setInfoMsg] = useState('');
   const errTimer = useRef(null);
+  const infoTimer = useRef(null);
+
+  /* ── Notificació informativa en entrar ── */
+  useEffect(() => {
+    const savedKm = localStorage.getItem('cancel_km');
+    const savedReason = localStorage.getItem('cancel_reason');
+    if (!savedKm || !savedReason) {
+      setInfoMsg(tx.cancel_info_required || 'Introdueix les dades (distància i text motiu cancel·lació) per confirmar la cancel·lació del transport.');
+      clearTimeout(infoTimer.current);
+      infoTimer.current = setTimeout(() => setInfoMsg(''), 15000);
+    }
+  }, []);
 
   function showErr(msg) {
     setErrMsg(msg);
@@ -128,6 +141,15 @@ function CancelTransport({ user, driverState, setDriverState, onLogout }) {
             <span style={{display:'flex',alignItems:'center',flexShrink:0}}><AlertCircle size={18} /></span>
             <span style={{flex:1,textAlign:'center'}}>{errMsg}</span>
             <button style={{background:'none',border:'none',cursor:'pointer',fontSize:'18px',color:'#e03030'}} onClick={() => { clearTimeout(errTimer.current); setErrMsg(''); }} aria-label="Tancar">✕</button>
+          </div>
+        )}
+
+        {/* ── Info: dades requerides ── */}
+        {infoMsg && (
+          <div className="notification-bar info" role="status" style={{ fontSize: '1.15rem' }}>
+            <span className="nb-icon"><Info size={20} /></span>
+            <span className="nb-text">{infoMsg}</span>
+            <button className="nb-close" onClick={() => { clearTimeout(infoTimer.current); setInfoMsg(''); }} aria-label="Tancar">✕</button>
           </div>
         )}
 
