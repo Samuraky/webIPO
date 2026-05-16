@@ -20,6 +20,22 @@
   .btn--cancel-op { min-width: unset; width: 100%; max-width: 22.5rem; }
   .data-table-wrapper { overflow-x: auto; }
   .features-row { gap: 30px; margin-top: 50px; }
+
+  /* ─── Taula moderna responsive ─── */
+  .transport-list-header {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    padding: 16px !important;
+  }
+
+  .table-desktop {
+    display: none !important;
+  }
+
+  .cards-mobile {
+    display: flex !important;
+  }
 }
 
 /* ─── MÒBIL (≤ 480px) ─── */

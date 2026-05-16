@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Play, Pause, AlertCircle, CheckCircle, Navigation, MapPin, Calendar, Truck, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play, Pause, AlertCircle, CheckCircle, CirclePlay, Navigation, MapPin, Calendar, Truck, X, Search, Filter, Package, Scale } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import { trucks, transports as allTransports } from '../data/mockData';
 import { useLang } from '../context/LangContext';
@@ -50,8 +50,9 @@ function DriverDashboard({ user, driverState, setDriverState, onLogout }) {
   const pageTransports = allTransports.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   function isToday(dateStr) {
-    // Demo: sempre permet assignar (desactivada validació de data real)
-    return true;
+    // Demo: dia actual és 15/05/2026
+    const today = '15/05/2026';
+    return dateStr === today;
   }
 
   function handleToggleTruck() {
@@ -212,62 +213,356 @@ function DriverDashboard({ user, driverState, setDriverState, onLogout }) {
           </div>
         )}
 
-        {/* ── Taula ── */}
-        <div className="data-table-wrapper">
-          <table className="data-table dashboard-table" aria-label="Llista de transports">
-            <thead>
-              <tr>
-                <th>{tx.col_date}</th>
-                <th>{tx.col_origin}</th>
-                <th>{tx.col_dest}</th>
-                <th>{tx.col_weight}</th>
-                <th>{tx.col_volume}</th>
-                <th>{tx.col_assign}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pageTransports.map((tr, idx) => (
-                <tr key={tr.id} className={idx % 2 === 1 ? 'tr-even' : ''}>
-                  <td>{tr.date}</td>
-                  <td>{tr.origin}</td>
-                  <td>{tr.destination}</td>
-                  <td>{tr.weight}</td>
-                  <td>{tr.volume}</td>
-                  <td>
-                    {hasTransport && assignedTransport?.id === tr.id ? (
-                      <button className="btn--assignar btn--assignar-active btn--field-shape" disabled>
-                        <Pause size={16} />
-                        {tx.btn_assigned}
-                      </button>
-                    ) : (
-                      <button
-                        className={`btn--assignar btn--field-shape${!hasTruck || hasTransport || !isToday(tr.date) ? ' btn--assignar-disabled' : ''}`}
-                        disabled={!hasTruck || hasTransport}
-                        onClick={() => handleRequestAssign(tr)}
-                      >
-                        <Play size={16} />
-                        {tx.btn_assign}
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        {/* ── Llistat de transports modern SaaS ── */}
+        <div className="transport-list-container" style={{
+          marginTop: '28px',
+          border: '2px solid #c5c2e0',
+          borderRadius: '16px',
+          overflow: 'hidden',
+          background: 'white'
+        }}>
+          {/* Header amb search i filtres estil SaaS */}
+          <div className="transport-list-header" style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '16px',
+            padding: '20px 24px',
+            background: 'var(--color-light1)',
+            borderBottom: '1px solid rgba(123, 119, 255, 0.12)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <h3 style={{
+                margin: 0,
+                color: 'var(--color-dark)',
+                fontSize: '1.15rem',
+                fontWeight: 600,
+                letterSpacing: '-0.01em'
+              }}>{tx.dash_table_title || 'Transports disponibles'}</h3>
+              <span style={{
+                background: 'var(--color-primary)',
+                color: 'white',
+                padding: '4px 10px',
+                borderRadius: '20px',
+                fontSize: '0.8rem',
+                fontWeight: 600
+              }}>{allTransports.length}</span>
+            </div>
 
-        {/* ── Paginació ── */}
-        <nav className="pagination" aria-label="Paginació">
-          <button className="btn--field-shape" disabled={page === 1} onClick={() => setPage(p => p - 1)}>
-            <ChevronLeft size={16} aria-hidden="true" />
-            {tx.prev_page}
-          </button>
-          <div className="page-num">{page}</div>
-          <button className="btn--field-shape" disabled={page === totalPages} onClick={() => setPage(p => p + 1)}>
-            {tx.next_page}
-            <ChevronRight size={16} aria-hidden="true" />
-          </button>
-        </nav>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+              {/* Search bar modern */}
+              <div style={{
+                position: 'relative',
+                display: 'flex',
+                alignItems: 'center'
+              }}>
+                <Search size={18} style={{
+                  position: 'absolute',
+                  left: '14px',
+                  color: 'var(--color-text-muted)',
+                  pointerEvents: 'none'
+                }} />
+                <input
+                  type="text"
+                  placeholder={tx.placeholder_search || 'Cercar transports...'}
+                  style={{
+                    padding: '10px 14px 10px 42px',
+                    borderRadius: '10px',
+                    border: '1px solid rgba(123, 119, 255, 0.2)',
+                    background: 'white',
+                    fontSize: '0.95rem',
+                    minWidth: '220px',
+                    outline: 'none',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = 'var(--color-primary)'}
+                  onBlur={(e) => e.target.style.borderColor = 'rgba(123, 119, 255, 0.2)'}
+                />
+              </div>
+
+              {/* Filter button */}
+              <button style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '10px 16px',
+                borderRadius: '10px',
+                border: '1px solid rgba(123, 119, 255, 0.25)',
+                background: 'white',
+                color: 'var(--color-dark)',
+                fontSize: '0.95rem',
+                fontWeight: 500,
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
+              }}>
+                <Filter size={18} />
+                {tx.btn_filter || 'Filtrar'}
+              </button>
+            </div>
+          </div>
+
+          {/* Taula desktop */}
+          <div className="table-desktop" style={{
+            display: 'block',
+            background: 'white',
+            overflow: 'hidden'
+          }}>
+            <table style={{
+              width: '100%',
+              borderCollapse: 'separate',
+              borderSpacing: 0,
+              fontSize: '0.95rem'
+            }}>
+              <thead>
+                <tr style={{
+                  background: 'var(--color-light1)',
+                  borderBottom: '1px solid rgba(123, 119, 255, 0.1)'
+                }}>
+                  {[
+                    { icon: <Calendar size={16} />, label: tx.col_date || 'Data' },
+                    { icon: <MapPin size={16} />, label: tx.col_origin || 'Origen' },
+                    { icon: <Navigation size={16} />, label: tx.col_dest || 'Destí' },
+                    { icon: <Scale size={16} />, label: tx.col_weight || 'Pes' },
+                    { icon: <Package size={16} />, label: tx.col_volume || 'Volum' },
+                    { icon: null, label: tx.col_assign || 'Acció' }
+                  ].map((col, i) => (
+                    <th key={i} style={{
+                      padding: '16px 24px',
+                      textAlign: i === 5 ? 'center' : 'left',
+                      fontWeight: 600,
+                      color: 'var(--color-dark)',
+                      fontSize: '0.85rem',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.03em',
+                      borderBottom: '1px solid rgba(123, 119, 255, 0.08)'
+                    }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: i === 5 ? 'center' : 'flex-start' }}>
+                        {col.icon && <span style={{ display: 'flex', alignItems: 'center', opacity: 0.7 }}>{col.icon}</span>}
+                        {col.label}
+                      </span>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {pageTransports.map((tr, idx) => (
+                  <tr key={tr.id} style={{
+                    transition: 'background-color 0.15s ease',
+                    backgroundColor: idx % 2 === 1 ? 'var(--color-light3)' : 'var(--color-white)',
+                    borderBottom: '1px solid rgba(123, 119, 255, 0.06)'
+                  }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--color-light1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = idx % 2 === 1 ? 'var(--color-light3)' : 'var(--color-white)'}>
+                    <td style={{ padding: '20px 24px', color: 'var(--color-dark)', fontWeight: 500 }}>{tr.date}</td>
+                    <td style={{ padding: '20px 24px', color: 'var(--color-text)' }}>{tr.origin}</td>
+                    <td style={{ padding: '20px 24px', color: 'var(--color-text)' }}>{tr.destination}</td>
+                    <td style={{ padding: '20px 24px', color: 'var(--color-text-muted)', fontWeight: 500, whiteSpace: 'nowrap' }}>
+                      <span style={{ color: 'var(--color-dark)', fontWeight: 600 }}>{tr.weight.replace(' T', '')}</span>
+                      <span style={{ fontSize: '0.85em', marginLeft: '2px' }}>T</span>
+                    </td>
+                    <td style={{ padding: '20px 24px', color: 'var(--color-text-muted)', fontWeight: 500, whiteSpace: 'nowrap' }}>
+                      <span style={{ color: 'var(--color-dark)', fontWeight: 600 }}>{tr.volume.replace(' m³', '')}</span>
+                      <span style={{ fontSize: '0.85em', marginLeft: '2px' }}>m³</span>
+                    </td>
+                    <td style={{ padding: '20px 24px', textAlign: 'center' }}>
+                      {hasTransport && assignedTransport?.id === tr.id ? (
+                        <span style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          padding: '8px 16px',
+                          borderRadius: '8px',
+                          background: 'var(--color-light3)',
+                          color: 'var(--color-primary)',
+                          fontSize: '0.9rem',
+                          fontWeight: 600
+                        }}>
+                          <Pause size={18} />
+                          {tx.btn_iniciat || 'Iniciat'}
+                        </span>
+                      ) : (
+                        <button
+                          onClick={() => handleRequestAssign(tr)}
+                          disabled={!hasTruck}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            padding: '8px 18px',
+                            borderRadius: '8px',
+                            border: !hasTruck ? '1px solid #e5e5e5' : (hasTransport || !isToday(tr.date) ? '1px solid #ccc' : '1px solid var(--color-primary)'),
+                            background: !hasTruck ? '#f5f5f5' : (hasTransport || !isToday(tr.date) ? '#fafafa' : 'transparent'),
+                            color: !hasTruck ? '#999' : (hasTransport || !isToday(tr.date) ? '#888' : 'var(--color-primary)'),
+                            fontSize: '0.9rem',
+                            fontWeight: 600,
+                            cursor: !hasTruck ? 'not-allowed' : 'pointer',
+                            transition: 'all 0.2s ease'
+                          }}
+                          onMouseEnter={(e) => {
+                            if (!(!hasTruck) && !hasTransport && isToday(tr.date)) {
+                              e.target.style.background = 'var(--color-primary)';
+                              e.target.style.color = 'white';
+                            }
+                          }}
+                          onMouseLeave={(e) => {
+                            if (!(!hasTruck) && !hasTransport && isToday(tr.date)) {
+                              e.target.style.background = 'transparent';
+                              e.target.style.color = 'var(--color-primary)';
+                            }
+                          }}
+                        >
+                          <Play size={14} />
+                          {tx.btn_assign}
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Cards per mòbil */}
+          <div className="cards-mobile" style={{
+            display: 'none',
+            flexDirection: 'column',
+            gap: '12px',
+            padding: '16px',
+            background: '#f8f7ff'
+          }}>
+            {pageTransports.map((tr) => (
+              <div key={tr.id} style={{
+                background: 'white',
+                borderRadius: '12px',
+                padding: '20px',
+                border: '1px solid rgba(123, 119, 255, 0.1)',
+                boxShadow: '0 2px 8px rgba(123, 119, 255, 0.04)'
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                  <span style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)', fontWeight: 500 }}>{tr.date}</span>
+                  {hasTransport && assignedTransport?.id === tr.id ? (
+                    <span style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      padding: '4px 10px',
+                      borderRadius: '6px',
+                      background: 'var(--color-light3)',
+                      color: 'var(--color-primary)',
+                      fontSize: '0.8rem',
+                      fontWeight: 600
+                    }}>
+                      <Pause size={16} />
+                      {tx.btn_iniciat || 'Iniciat'}
+                    </span>
+                  ) : (
+                    <button
+                      onClick={() => handleRequestAssign(tr)}
+                      disabled={!hasTruck}
+                      style={{
+                        padding: '6px 14px',
+                        borderRadius: '6px',
+                        border: !hasTruck ? '1px solid #e5e5e5' : (hasTransport || !isToday(tr.date) ? '1px solid #ccc' : '1px solid var(--color-primary)'),
+                        background: !hasTruck ? '#f5f5f5' : (hasTransport || !isToday(tr.date) ? '#fafafa' : 'transparent'),
+                        color: !hasTruck ? '#999' : (hasTransport || !isToday(tr.date) ? '#888' : 'var(--color-primary)'),
+                        fontSize: '0.85rem',
+                        fontWeight: 600,
+                        cursor: !hasTruck ? 'not-allowed' : 'pointer'
+                      }}
+                    >
+                      {tx.btn_assign}
+                    </button>
+                  )}
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '12px' }}>
+                  <div>
+                    <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginBottom: '4px' }}>{tx.col_origin || 'Origen'}</div>
+                    <div style={{ fontSize: '0.95rem', color: 'var(--color-dark)', fontWeight: 500 }}>{tr.origin}</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginBottom: '4px' }}>{tx.col_dest || 'Destí'}</div>
+                    <div style={{ fontSize: '0.95rem', color: 'var(--color-dark)', fontWeight: 500 }}>{tr.destination}</div>
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: '16px' }}>
+                  <div style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>
+                    <span style={{ color: 'var(--color-dark)', fontWeight: 600 }}>{tr.weight.replace(' T', '')}</span> T
+                  </div>
+                  <div style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>
+                    <span style={{ color: 'var(--color-dark)', fontWeight: 600 }}>{tr.volume.replace(' m³', '')}</span> m³
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* ── Paginació ── */}
+          <nav className="pagination" aria-label="Paginació" style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '12px',
+            padding: '16px 24px',
+            background: 'var(--color-light1)',
+            borderTop: '1px solid rgba(123, 119, 255, 0.12)'
+          }}>
+            <button
+              disabled={page === 1}
+              onClick={() => setPage(p => p - 1)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '8px 14px',
+                borderRadius: '8px',
+                border: page === 1 ? '1px solid #e5e5e5' : '2px solid var(--color-primary)',
+                background: page === 1 ? '#f5f5f5' : 'var(--color-white)',
+                color: page === 1 ? '#999' : 'var(--color-primary)',
+                fontSize: '0.9rem',
+                fontWeight: 600,
+                cursor: page === 1 ? 'not-allowed' : 'pointer',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => { if (page !== 1) { e.target.style.background = 'var(--color-light3)'; }}}
+              onMouseLeave={(e) => { if (page !== 1) { e.target.style.background = 'var(--color-white)'; }}}
+            >
+              <ChevronLeft size={16} aria-hidden="true" />
+              {tx.prev_page}
+            </button>
+            <div style={{
+              padding: '10px 20px',
+              borderRadius: '20px',
+              background: 'var(--color-primary)',
+              fontWeight: 700,
+              fontSize: '0.95rem',
+              color: 'white',
+              boxShadow: '0 2px 8px rgba(87, 87, 153, 0.3)'
+            }}>{page}</div>
+            <button
+              disabled={page === totalPages}
+              onClick={() => setPage(p => p + 1)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '8px 14px',
+                borderRadius: '8px',
+                border: page === totalPages ? '1px solid #e5e5e5' : '2px solid var(--color-primary)',
+                background: page === totalPages ? '#f5f5f5' : 'var(--color-white)',
+                color: page === totalPages ? '#999' : 'var(--color-primary)',
+                fontSize: '0.9rem',
+                fontWeight: 600,
+                cursor: page === totalPages ? 'not-allowed' : 'pointer',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => { if (page !== totalPages) { e.target.style.background = 'var(--color-light3)'; }}}
+              onMouseLeave={(e) => { if (page !== totalPages) { e.target.style.background = 'var(--color-white)'; }}}
+            >
+              {tx.next_page}
+              <ChevronRight size={16} aria-hidden="true" />
+            </button>
+          </nav>
+        </div>
 
       </main>
 

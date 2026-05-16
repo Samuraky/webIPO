@@ -68,6 +68,7 @@ export const t = {
     col_assign: 'Assignar',
     btn_assign:    'Assignar',
     btn_assigned:  'Assignat',
+    btn_iniciat:   'Iniciat',
     btn_finish:    'Finalitzar',
     btn_cancel_tr: 'Cancel·lar',
     prev_page: 'Anterior',
@@ -77,7 +78,7 @@ export const t = {
     modal_no:  'No',
     notif_assigned:   'Transport iniciat.',
     err_no_truck:     'No tens cap camió assignat.',
-    err_has_transport:'Ja tens un transport assignat.',
+    err_has_transport:'El conductor encara està fent un transport.',
     err_not_today:    'El transport seleccionat no és per al dia d\'avui.',
 
     /* Info fields */
@@ -203,6 +204,7 @@ export const t = {
     col_assign: 'Asignar',
     btn_assign:    'Asignar',
     btn_assigned:  'Asignado',
+    btn_iniciat:   'Iniciado',
     btn_finish:    'Finalizar',
     btn_cancel_tr: 'Cancelar',
     prev_page: 'Anterior',
@@ -212,7 +214,7 @@ export const t = {
     modal_no:  'No',
     notif_assigned:   'Transporte iniciado.',
     err_no_truck:     'No tienes ningún camión asignado.',
-    err_has_transport:'Ya tienes un transporte asignado.',
+    err_has_transport:'El conductor todavía está haciendo un transporte.',
     err_not_today:    'El transporte seleccionado no es para el día de hoy.',
 
     field_name:  'Nombre',
@@ -332,6 +334,7 @@ export const t = {
     col_assign: 'Assign',
     btn_assign:    'Assign',
     btn_assigned:  'Assigned',
+    btn_iniciat:   'Started',
     btn_finish:    'Finish',
     btn_cancel_tr: 'Cancel',
     prev_page: 'Previous',
@@ -341,7 +344,7 @@ export const t = {
     modal_no:  'No',
     notif_assigned:   'Transport started.',
     err_no_truck:     'You have no truck assigned.',
-    err_has_transport:'You already have a transport assigned.',
+    err_has_transport:'The driver is still doing a transport.',
     err_not_today:    'The selected transport is not for today.',
 
     field_name:  'Name',
