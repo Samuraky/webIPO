@@ -153,7 +153,17 @@ function DriverDashboard({ user, driverState, setDriverState, onLogout }) {
                   <Navigation size={20} />
                   {tx.dash_transport_title}
                 </div>
-                <span className="transport-status">{tx.btn_assigned}</span>
+                <span className="transport-status" style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '6px 12px',
+                  borderRadius: '6px',
+                  background: 'var(--color-light3)',
+                  color: 'var(--color-primary)',
+                  fontSize: '0.85rem',
+                  fontWeight: 600
+                }}><Pause size={16} />{tx.btn_iniciat || 'Iniciat'}</span>
               </div>
 
               <div className="transport-card-body">
