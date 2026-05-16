@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, User, MapPin, Phone, Mail, Lock, Eye, EyeOff, FileImage } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import { useLang } from '../context/LangContext';
 import { t } from '../i18n/translations';
 
-function EditProfile({ user, onUpdateUser }) {
+function EditProfile({ user, onUpdateUser, onLogout }) {
   const navigate = useNavigate();
   const { lang } = useLang();
   const tx = t[lang];
@@ -17,11 +17,46 @@ function EditProfile({ user, onUpdateUser }) {
     password: '',
   });
   const [showPwd, setShowPwd]             = useState(false);
-  const [photoPreview, setPhotoPreview]   = useState('https://randomuser.me/api/portraits/men/32.jpg');
-  const [carnetPreview, setCarnetPreview] = useState('https://via.placeholder.com/160x110/F1F1FF/575799?text=Carnet');
+  const [photoPreview, setPhotoPreview]   = useState(
+    user?.photo || 'https://randomuser.me/api/portraits/men/32.jpg'
+  );
+  const [carnetPreview, setCarnetPreview] = useState(
+    user?.licenseImage || 'https://placehold.co/160x110/F1F1FF/575799?text=Carnet'
+  );
   const [showModal, setShowModal]         = useState(false);
-  const [okModal, setOkModal]             = useState(false);
-  const [error, setError]                 = useState('');
+  const [showDoneModal, setShowDoneModal] = useState(false);
+  const [errorMsg, setErrorMsg]           = useState('');
+  const [fadingError, setFadingError]     = useState(false);
+  const [tick, setTick]                   = useState(0); // Forçar re-render
+  const errorTimer = useRef(null);
+  const okTimer = useRef(null);
+  const okMsgRef = useRef('');
+
+  useEffect(() => () => {
+    clearTimeout(errorTimer.current);
+    clearTimeout(okTimer.current);
+  }, []);
+
+  function showSuccess(msg) {
+    okMsgRef.current = msg;
+    setTick(t => t + 1); // Forçar re-render
+    clearTimeout(okTimer.current);
+    okTimer.current = setTimeout(() => {
+      okMsgRef.current = '';
+      setTick(t => t + 1); // Forçar re-render
+    }, 4500);
+  }
+
+  function showError(msg) {
+    setFadingError(false);
+    setErrorMsg(msg);
+    clearTimeout(errorTimer.current);
+    errorTimer.current = setTimeout(() => {
+      setFadingError(true);
+      setTimeout(() => setErrorMsg(''), 400);
+    }, 2500);
+  }
+
 
   function handleChange(field, value) {
     setForm(prev => ({ ...prev, [field]: value }));
@@ -37,38 +72,60 @@ function EditProfile({ user, onUpdateUser }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (!form.address || !form.phone || !form.email) {
+      showError(tx.edit_err_missing || 'Falten dades per informar.');
+      return;
+    }
     setShowModal(true);
   }
 
   function handleConfirm() {
-    if (onUpdateUser) onUpdateUser({ ...user, ...form });
     setShowModal(false);
-    setOkModal(true);
-  }
 
+    const updatedUser = {
+      ...user,
+      ...form,
+      photo: photoPreview,
+      licenseImage: carnetPreview,
+    };
+
+    showSuccess(tx.edit_done || 'Dades modificades correctament');
+
+    setTimeout(() => {
+      if (onUpdateUser) onUpdateUser(updatedUser);
+    }, 4000);
+  }
   return (
     <div className="page-wrapper">
-      <Navbar variant="driver" userName={user?.name || 'Conductor'} />
+      <Navbar variant="driver" userName={user?.name || 'Conductor'} onLogout={onLogout} />
 
-      <main className="page-content" style={{ maxWidth: '35rem' }}>
+      <main className="page-content" style={{ maxWidth: '42rem', margin: '0 auto', padding: 'var(--sp-6) 1rem' }}>
 
-        <div style={{ marginBottom: '1rem' }}>
+        <div style={{ marginBottom: '1.5rem' }}>
           <button className="btn--back" onClick={() => navigate('/dashboard')}>
             <ChevronLeft size={15} /> {tx.btn_back}
           </button>
         </div>
 
-        <div className="auth-card" style={{ maxWidth: '100%', marginTop: 0 }}>
+        <div className="auth-card" style={{ width: '100%', border: '2px solid #c5c2e0' }}>
           <div className="auth-icon" aria-hidden="true"><User size={42} /></div>
           <h1 className="auth-title">{tx.edit_title}</h1>
 
-          {error && (
-            <div className="notification-bar error" role="alert">
+          {errorMsg && (
+            <div className={`notification-bar error${fadingError ? ' nb-fade-out' : ''}`} role="alert">
               <span className="nb-icon"><User size={18} /></span>
-              <span className="nb-text">{error}</span>
-              <button className="nb-close" onClick={() => setError('')}>✕</button>
+              <span className="nb-text">{errorMsg}</span>
             </div>
           )}
+
+          {okMsgRef.current && (
+            <div className="notification-bar info" role="status">
+              <span className="nb-icon"><User size={18} /></span>
+              <span className="nb-text">{okMsgRef.current}</span>
+            </div>
+          )}
+
+
 
           <form onSubmit={handleSubmit} noValidate>
 
@@ -84,7 +141,7 @@ function EditProfile({ user, onUpdateUser }) {
               <label className="form-label" htmlFor="address">{tx.edit_addr}</label>
               <div className="input-wrapper">
                 <span className="iw-icon"><MapPin size={18} /></span>
-                <input type="text" id="address" placeholder={tx.edit_addr_ph}
+                <input type="text" id="address" autoComplete="street-address" placeholder={tx.edit_addr_ph}
                   value={form.address} onChange={e => handleChange('address', e.target.value)} />
               </div>
             </div>
@@ -93,7 +150,7 @@ function EditProfile({ user, onUpdateUser }) {
               <label className="form-label" htmlFor="phone">{tx.edit_phone}</label>
               <div className="input-wrapper">
                 <span className="iw-icon"><Phone size={18} /></span>
-                <input type="tel" id="phone" placeholder={tx.edit_phone_ph}
+                <input type="tel" id="phone" autoComplete="tel" placeholder={tx.edit_phone_ph}
                   value={form.phone} onChange={e => handleChange('phone', e.target.value)} />
               </div>
             </div>
@@ -102,7 +159,7 @@ function EditProfile({ user, onUpdateUser }) {
               <label className="form-label" htmlFor="email">{tx.edit_email}</label>
               <div className="input-wrapper">
                 <span className="iw-icon"><Mail size={18} /></span>
-                <input type="email" id="email" placeholder={tx.edit_email_ph}
+                <input type="email" id="email" autoComplete="email" placeholder={tx.edit_email_ph}
                   value={form.email} onChange={e => handleChange('email', e.target.value)} />
               </div>
             </div>
@@ -111,7 +168,7 @@ function EditProfile({ user, onUpdateUser }) {
               <label className="form-label" htmlFor="password">{tx.edit_pwd}</label>
               <div className="input-wrapper">
                 <span className="iw-icon"><Lock size={18} /></span>
-                <input type={showPwd ? 'text' : 'password'} id="password"
+                <input type={showPwd ? 'text' : 'password'} id="password" autoComplete="new-password"
                   placeholder={tx.edit_pwd_ph}
                   value={form.password} onChange={e => handleChange('password', e.target.value)} />
                 <button type="button" className="iw-toggle" onClick={() => setShowPwd(v => !v)}>
@@ -121,10 +178,10 @@ function EditProfile({ user, onUpdateUser }) {
             </div>
 
             <div className="form-group">
-              <p className="form-label" style={{ color: 'var(--color-text)' }}>{tx.edit_images}</p>
+              <p className="form-label">{tx.edit_images}</p>
               <div className="edit-img-row">
                 <div className="edit-img-col">
-                  <span className="eic-label">{tx.edit_photo}</span>
+                  <span className="form-label">{tx.edit_photo}</span>
                   <div className="img-upload-area">
                     <img src={photoPreview} alt="Foto del conductor" />
                   </div>
@@ -135,7 +192,7 @@ function EditProfile({ user, onUpdateUser }) {
                   </label>
                 </div>
                 <div className="edit-img-col">
-                  <span className="eic-label">{tx.edit_carnet}</span>
+                  <span className="form-label">{tx.edit_carnet}</span>
                   <div className="img-upload-area">
                     <img src={carnetPreview} alt="Carnet de conduir" />
                   </div>
@@ -161,24 +218,36 @@ function EditProfile({ user, onUpdateUser }) {
           <div className="modal-box">
             <p className="modal-title">{tx.edit_modal_q}</p>
             <div className="modal-actions">
-              <button className="btn btn--primary" onClick={handleConfirm}>{tx.modal_yes}</button>
-              <button className="btn btn--outline" onClick={() => setShowModal(false)}>{tx.modal_no}</button>
+              <button type="button" className="btn--confirm" onClick={handleConfirm}>
+                {tx.modal_yes || 'Sí'}
+              </button>
+              <button type="button" className="btn--cancel" onClick={() => setShowModal(false)}>
+                {tx.modal_no || 'No'}
+              </button>
             </div>
           </div>
         </div>
       )}
 
-      {okModal && (
+      {showDoneModal && (
         <div className="modal-backdrop">
           <div className="modal-box">
-            <p className="modal-title">{tx.edit_done}</p>
+            <p className="modal-title">
+              {tx.edit_done || 'Dades modificades correctament'}
+            </p>
             <div className="modal-actions">
-              <button className="btn btn--primary"
-                onClick={() => { setOkModal(false); navigate('/dashboard'); }}>{tx.btn_ok}</button>
+              <button
+                type="button"
+                className="btn--primary"
+                onClick={() => setShowDoneModal(false)}
+              >
+                OK
+              </button>
             </div>
           </div>
         </div>
       )}
+
     </div>
   );
 }

@@ -92,7 +92,7 @@ function App() {
           path="/edit-profile"
           element={
             <PrivateRoute>
-              <EditProfile user={user} onUpdateUser={setUser} />
+              <EditProfile user={user} onUpdateUser={setUser} onLogout={handleLogout} />
             </PrivateRoute>
           }
         />

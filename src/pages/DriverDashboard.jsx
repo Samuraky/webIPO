@@ -582,8 +582,8 @@ function DriverDashboard({ user, driverState, setDriverState, onLogout }) {
           <div className="modal-box">
             <p className="modal-title">{tx.modal_assign_q}</p>
             <div className="modal-actions">
-              <button className="btn--confirm" onClick={handleConfirmAssign}>{tx.modal_yes}</button>
-              <button className="btn--cancel" onClick={() => setShowModal(false)}>{tx.modal_no}</button>
+              <button className="btn btn--primary" onClick={handleConfirmAssign}>{tx.modal_yes}</button>
+              <button className="btn btn--outline" onClick={() => setShowModal(false)}>{tx.modal_no}</button>
             </div>
           </div>
         </div>

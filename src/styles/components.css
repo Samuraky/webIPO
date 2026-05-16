@@ -586,6 +586,12 @@ input[type="number"].no-spin { -moz-appearance: textfield; appearance: textfield
   color:      #e03030;
   animation:  errSlideIn 0.3s ease;
 }
+.notification-bar.success {
+  border:     1.5px solid #22c55e;
+  background: #f0fdf4;
+  color:      #166534;
+  animation:  errSlideIn 0.3s ease;
+}
 .dash-notif {
   overflow:       hidden;
   opacity:        0;
@@ -1129,6 +1135,24 @@ input[type="number"].no-spin { -moz-appearance: textfield; appearance: textfield
 }
 .modal-actions .btn--primary:hover { background: #5750ad; }
 
+.modal-actions .btn--outline {
+  width: 240px; height: 56px;
+  border: 2px solid #6b63c6;
+  border-radius: 6px;
+  background: var(--color-white);
+  color: #6b63c6;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all 0.2s;
+}
+.modal-actions .btn--outline:hover {
+  background: var(--color-light3);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
 /* Modal Sí/No (dos botons) */
 .modal-actions .btn--confirm {
   height: 48px; font-size: var(--font-size-lg); font-weight: 700;
@@ -1205,7 +1229,7 @@ input[type="number"].no-spin { -moz-appearance: textfield; appearance: textfield
 .feature-card .fc-desc  { font-size: 0.9375rem; line-height: 1.5; color: var(--color-text-muted); }
 
 /* ─── EDIT IMAGES ─── */
-.edit-img-row { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 4px; }
+.edit-img-row { display: flex; gap: 3rem; flex-wrap: wrap; margin-bottom: 4px; justify-content: center; }
 .edit-img-col { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .eic-label { font-size: var(--font-size-sm); font-weight: 600; color: var(--color-dark); }
 .img-upload-area {
