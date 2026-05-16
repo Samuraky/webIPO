@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Play, Pause, AlertCircle, CheckCircle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play, Pause, AlertCircle, CheckCircle, Navigation, MapPin, Calendar, Truck, X } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import { trucks, transports as allTransports } from '../data/mockData';
 import { useLang } from '../context/LangContext';
@@ -50,9 +50,8 @@ function DriverDashboard({ user, driverState, setDriverState, onLogout }) {
   const pageTransports = allTransports.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   function isToday(dateStr) {
-    const now = new Date();
-    const [d, m, y] = dateStr.split('/');
-    return parseInt(d) === now.getDate() && parseInt(m) === now.getMonth() + 1 && parseInt(y) === now.getFullYear();
+    // Demo: sempre permet assignar (desactivada validació de data real)
+    return true;
   }
 
   function handleToggleTruck() {
@@ -98,54 +97,102 @@ function DriverDashboard({ user, driverState, setDriverState, onLogout }) {
         <div className="dashboard-info-row">
 
           {/* Bloc camió */}
-          <div className="transport-block" style={{ flex: 1, display:'flex', alignItems:'stretch', gap:'var(--sp-4)' }}>
-            {!hasTruck ? (
-              <div style={{ flex:1, display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '80px' }}>
-                <p style={{ color: 'var(--color-text-muted)', fontWeight: 700 }}>{tx.dash_no_truck}</p>
+          {!hasTruck ? (
+            <div className="transport-block" style={{ flex: 1, border: '2px solid #c5c2e0', borderRadius: '14px', padding: '20px 24px', background: 'var(--color-white)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100%', height: '100%' }}>
+                <p style={{ color: 'var(--color-text-muted)', fontWeight: 700, textAlign: 'center' }}>{tx.dash_no_truck}</p>
               </div>
-            ) : (
-              <>
-                <img src={TRUCK_IMG} alt="Camió"
-                  style={{ width:'140px', height:'120px', objectFit:'cover', borderRadius:'var(--radius-md)', flexShrink:0 }}
+            </div>
+          ) : (
+            <div className="truck-card dashboard-truck-card">
+              <div className="truck-card-header dashboard-truck-header">
+                <div className="truck-card-title dashboard-truck-title">
+                  <Truck size={20} />
+                  {tx.dash_truck_title}
+                </div>
+                <span className="dashboard-truck-status-placeholder"></span>
+              </div>
+
+              <div className="truck-card-body dashboard-truck-body">
+                <img
+                  src={TRUCK_IMG}
+                  alt={assignedTruck.model}
+                  className="truck-image dashboard-truck-img"
                 />
-                <div style={{ flex:1 }}>
-                  <p className="tb-title" style={{ color:'var(--color-dark)', fontSize:'var(--font-size-lg)', marginBottom:'10px' }}>{tx.dash_truck_title}</p>
-                  <div className="tb-fields">
-                    <div className="tb-field truck-field"><span>{tx.field_name}: </span>{assignedTruck.model}</div>
-                    <div className="tb-field truck-field"><span>{tx.field_plate}: </span>{assignedTruck.plate}</div>
+
+                <div className="dashboard-truck-info-box">
+                  <div className="dashboard-truck-info-item">
+                    <div>
+                      <div className="dashboard-truck-label">{tx.field_name}</div>
+                      <div className="dashboard-truck-value">{assignedTruck.model}</div>
+                    </div>
+                  </div>
+                  <div className="dashboard-truck-info-item">
+                    <div>
+                      <div className="dashboard-truck-label">{tx.field_plate}</div>
+                      <div className="dashboard-truck-value">{assignedTruck.plate}</div>
+                    </div>
                   </div>
                 </div>
-              </>
-            )}
-          </div>
+              </div>
+            </div>
+          )}
 
           {/* Bloc transport */}
-          <div className="transport-block" style={{ flex: 1 }}>
-            {!hasTransport ? (
+          {!hasTransport ? (
+            <div className="transport-block" style={{ flex: 1, border: '2px solid #c5c2e0', borderRadius: '14px', padding: '20px 24px', background: 'var(--color-white)' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100%', height: '100%' }}>
                 <p style={{ color: 'var(--color-text-muted)', fontWeight: 700, textAlign:'center' }}>{tx.dash_no_transport}</p>
               </div>
-            ) : (
-              <>
-                <p className="tb-title" style={{ color:'var(--color-dark)', fontSize:'var(--font-size-lg)', marginBottom:'10px' }}>{tx.dash_transport_title}</p>
-                <div className="tb-fields">
-                  <div className="tb-field"><span>{tx.field_origin}: </span>{assignedTransport.origin}</div>
-                  <div className="tb-field"><span>{tx.field_dest}: </span>{assignedTransport.destination}</div>
-                  <div className="tb-field"><span>{tx.field_date}: </span>{assignedTransport.date}</div>
+            </div>
+          ) : (
+            <div className="transport-assigned-card" style={{ flex: 1 }}>
+              <div className="transport-assigned-header">
+                <div className="transport-assigned-title">
+                  <Navigation size={20} />
+                  {tx.dash_transport_title}
                 </div>
-                <div className="tb-actions">
-                  <div style={{ display:'flex', gap:'8px', marginLeft:'auto' }}>
-                    <button className="btn btn--primary btn--field-shape" onClick={() => navigate('/finish-transport')}>
-                      {tx.btn_finish}
-                    </button>
-                    <button className="btn btn--outline btn--field-shape" onClick={() => navigate('/cancel-transport')}>
-                      {tx.btn_cancel_tr}
-                    </button>
+                <span className="transport-status">{tx.btn_assigned}</span>
+              </div>
+
+              <div className="transport-card-body">
+                <div className="transport-info-box">
+                  <div className="transport-info-item">
+                    <MapPin size={18} style={{ color: 'var(--color-primary)', flexShrink: 0 }} />
+                    <div>
+                      <div className="transport-label">{tx.field_origin}</div>
+                      <div className="transport-value">{assignedTransport.origin}</div>
+                    </div>
+                  </div>
+                  <div className="transport-info-item">
+                    <MapPin size={18} style={{ color: 'var(--color-primary)', flexShrink: 0 }} />
+                    <div>
+                      <div className="transport-label">{tx.field_dest}</div>
+                      <div className="transport-value">{assignedTransport.destination}</div>
+                    </div>
+                  </div>
+                  <div className="transport-info-item">
+                    <Calendar size={18} style={{ color: 'var(--color-primary)', flexShrink: 0 }} />
+                    <div>
+                      <div className="transport-label">{tx.field_date}</div>
+                      <div className="transport-value">{assignedTransport.date}</div>
+                    </div>
                   </div>
                 </div>
-              </>
-            )}
-          </div>
+
+                <div className="transport-actions-box">
+                  <button className="btn--confirm btn--field-shape" onClick={() => navigate('/finish-transport')}>
+                    <CheckCircle size={20} />
+                    {tx.btn_finish}
+                  </button>
+                  <button className="btn--cancel-op btn--field-shape" onClick={() => navigate('/cancel-transport')}>
+                    <X size={20} />
+                    {tx.btn_cancel_tr}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* ── Error ── */}

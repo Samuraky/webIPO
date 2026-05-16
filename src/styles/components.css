@@ -731,7 +731,11 @@ input[type="number"].no-spin { -moz-appearance: textfield; appearance: textfield
 .truck-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
 
 /* ─── DASHBOARD INFO BLOCKS ─── */
-.dashboard-info-row { display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; align-items: stretch; }
+.dashboard-info-row { display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: nowrap; align-items: stretch; }
+.dashboard-info-row > * { min-width: 0; }
+.dashboard-info-row > .truck-card { flex: 0 0 400px; }
+.dashboard-info-row > .transport-block,
+.dashboard-info-row > .transport-assigned-card { flex: 1 1 auto; }
 .info-block {
   background:    var(--color-white);
   border:        1.5px solid var(--color-light1);
@@ -765,6 +769,254 @@ input[type="number"].no-spin { -moz-appearance: textfield; appearance: textfield
 .truck-field { background: var(--color-light3) !important; border: 2px solid var(--color-primary) !important; }
 .btn--field-shape { border-radius: 8px !important; padding: 12px 28px !important; font-size: var(--font-size-xl) !important; }
 .transport-block .tb-actions { display: flex; gap: 8px; align-items: center; justify-content: space-between; }
+
+/* ─── TRANSPORT ASSIGNED CARD (nova versió) ─── */
+.transport-assigned-card {
+  background: var(--color-white);
+  border: 2px solid var(--color-border-soft);
+  border-radius: 18px;
+  padding: 20px 24px;
+  box-shadow: var(--shadow-md);
+  flex: 1;
+  min-height: 280px;
+  max-height: 280px;
+}
+.transport-assigned-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.transport-assigned-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: var(--font-size-xl);
+  color: var(--color-primary);
+}
+.transport-status {
+  background: var(--color-success-bg, #dff7e8);
+  color: var(--color-success-text, #16803a);
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: var(--font-size-base);
+}
+.transport-info-box {
+  border: 1.5px solid var(--color-light1);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.transport-info-item {
+  display: flex;
+  gap: 12px;
+  padding: 8px 12px;
+  border-bottom: 1.5px solid var(--color-light1);
+}
+.transport-info-item:last-child {
+  border-bottom: none;
+}
+.transport-label {
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.transport-value {
+  font-weight: 600;
+  font-size: var(--font-size-base);
+  color: var(--color-dark);
+  word-break: break-word;
+}
+.transport-actions-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+.transport-card-body {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+}
+.transport-card-body .transport-info-box {
+  flex: 1;
+}
+.transport-actions-box {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 0 0 180px;
+  justify-content: center;
+  align-items: center;
+}
+.transport-actions-box .btn--confirm,
+.transport-actions-box .btn--cancel-op {
+  min-width: unset !important;
+  width: 100% !important;
+  height: auto !important;
+  padding: 10px 28px !important;
+  font-size: 15px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* ─── TRUCK CARD (nou disseny) ─── */
+.truck-card {
+  background: var(--color-white);
+  border-radius: 18px;
+  padding: 16px 20px;
+  border: 2px solid var(--color-border-soft);
+  box-shadow: var(--shadow-md);
+  flex: 1;
+}
+.truck-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.truck-card-body {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.truck-image {
+  width: 140px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+.truck-info {
+  flex: 1;
+  min-width: 0;
+}
+.truck-title {
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  color: var(--color-dark);
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+.truck-section {
+  margin-bottom: 10px;
+}
+.truck-section:last-child {
+  margin-bottom: 0;
+}
+.truck-label {
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+.truck-value {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-dark);
+}
+
+/* ─── TRUCK CARD DASHBOARD (específic) ─── */
+.dashboard-truck-card {
+  min-height: 280px;
+  max-height: 280px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 24px !important;
+}
+.dashboard-truck-body {
+  flex: 1;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.dashboard-truck-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+.dashboard-truck-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: var(--font-size-xl);
+  color: var(--color-primary);
+  text-transform: none;
+}
+.dashboard-truck-status {
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+}
+.dashboard-truck-status-placeholder {
+  padding: 6px 14px;
+  font-size: var(--font-size-sm);
+  visibility: hidden;
+}
+.dashboard-truck-body {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.dashboard-truck-img {
+  width: 160px;
+  height: 178px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+  border: 2px solid #c5c2e0;
+}
+.dashboard-truck-info-box {
+  border: 2px solid #c5c2e0;
+  border-radius: 14px;
+  overflow: hidden;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8px;
+}
+.dashboard-truck-info-item {
+  display: flex;
+  gap: 12px;
+  padding: 16px 18px;
+  border-bottom: 1.5px solid #e8e7f9;
+}
+.dashboard-truck-info-item:last-child {
+  border-bottom: none;
+}
+.dashboard-truck-label {
+  color: var(--color-primary) !important;
+  font-size: var(--font-size-xs) !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  margin-bottom: 4px;
+}
+.dashboard-truck-value {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-dark);
+}
 
 /* ─── DASHBOARD MAIN (ample) ─── */
 .dashboard-main {
