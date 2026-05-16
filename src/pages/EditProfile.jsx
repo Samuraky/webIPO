@@ -112,15 +112,15 @@ function EditProfile({ user, onUpdateUser, onLogout }) {
           <h1 className="auth-title">{tx.edit_title}</h1>
 
           {errorMsg && (
-            <div className={`notification-bar error${fadingError ? ' nb-fade-out' : ''}`} role="alert">
-              <span className="nb-icon"><User size={18} /></span>
+            <div className={`notification-bar error${fadingError ? ' nb-fade-out' : ''}`} role="alert" style={{ fontSize: '1.15rem' }}>
+              <span className="nb-icon"><User size={20} /></span>
               <span className="nb-text">{errorMsg}</span>
             </div>
           )}
 
           {okMsgRef.current && (
-            <div className="notification-bar info" role="status">
-              <span className="nb-icon"><User size={18} /></span>
+            <div className="notification-bar info" role="status" style={{ fontSize: '1.15rem' }}>
+              <span className="nb-icon"><User size={20} /></span>
               <span className="nb-text">{okMsgRef.current}</span>
             </div>
           )}

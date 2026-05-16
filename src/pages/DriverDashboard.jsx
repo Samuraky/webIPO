@@ -208,16 +208,16 @@ function DriverDashboard({ user, driverState, setDriverState, onLogout }) {
 
         {/* ── Error ── */}
         {errMsg && (
-          <div role="alert" style={{ display:'flex', alignItems:'center', gap:'12px', padding:'10px 14px', marginBottom:'18px', borderRadius:'12px', fontSize:'var(--font-size-lg)', fontWeight:500, width:'100%', boxSizing:'border-box', border:'1.5px solid #ff5a5a', background:'#fff1f1', color:'#e03030' }}>
-            <span style={{display:'flex',alignItems:'center',flexShrink:0}}><AlertCircle size={18} /></span>
+          <div role="alert" style={{ display:'flex', alignItems:'center', gap:'12px', padding:'10px 14px', marginBottom:'18px', borderRadius:'12px', fontSize:'1.15rem', fontWeight:500, width:'100%', boxSizing:'border-box', border:'1.5px solid #ff5a5a', background:'#fff1f1', color:'#e03030' }}>
+            <span style={{display:'flex',alignItems:'center',flexShrink:0}}><AlertCircle size={20} /></span>
             <span style={{flex:1,textAlign:'center'}}>{errMsg}</span>
             <button style={{background:'none',border:'none',cursor:'pointer',fontSize:'18px',color:'#e03030'}} onClick={() => { clearTimeout(errTimer.current); setErrMsg(''); }} aria-label="Tancar">✕</button>
           </div>
         )}
         {/* ── Èxit ── */}
         {okMsg && (
-          <div role="status" style={{ display:'flex', alignItems:'center', gap:'12px', padding:'10px 14px', marginBottom:'18px', borderRadius:'12px', fontSize:'var(--font-size-lg)', fontWeight:500, width:'100%', boxSizing:'border-box', border:'1.5px solid var(--color-border)', background:'var(--color-light1)', color:'var(--color-dark)' }}>
-            <span style={{display:'flex',alignItems:'center',flexShrink:0}}><CheckCircle size={18} /></span>
+          <div role="status" style={{ display:'flex', alignItems:'center', gap:'12px', padding:'10px 14px', marginBottom:'18px', borderRadius:'12px', fontSize:'1.15rem', fontWeight:500, width:'100%', boxSizing:'border-box', border:'1.5px solid var(--color-border)', background:'var(--color-light1)', color:'var(--color-dark)' }}>
+            <span style={{display:'flex',alignItems:'center',flexShrink:0}}><CheckCircle size={20} /></span>
             <span style={{flex:1,textAlign:'center'}}>{okMsg}</span>
             <button style={{background:'none',border:'none',cursor:'pointer',fontSize:'18px',color:'var(--color-dark)',opacity:0.6}} onClick={() => { clearTimeout(okTimer.current); setOkMsg(''); }} aria-label="Tancar">✕</button>
           </div>

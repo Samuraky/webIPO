@@ -31,13 +31,9 @@ function CancelTransport({ user, driverState, setDriverState, onLogout }) {
 
   /* ── Notificació informativa en entrar ── */
   useEffect(() => {
-    const savedKm = localStorage.getItem('cancel_km');
-    const savedReason = localStorage.getItem('cancel_reason');
-    if (!savedKm || !savedReason) {
-      setInfoMsg(tx.cancel_info_required || 'Introdueix les dades (distància i text motiu cancel·lació) per confirmar la cancel·lació del transport.');
-      clearTimeout(infoTimer.current);
-      infoTimer.current = setTimeout(() => setInfoMsg(''), 15000);
-    }
+    setInfoMsg(tx.cancel_info_required || 'Introdueix la distància i el motiu de cancel·lació per confirmar');
+    clearTimeout(infoTimer.current);
+    infoTimer.current = setTimeout(() => setInfoMsg(''), 15000);
   }, []);
 
   function showErr(msg) {
@@ -52,6 +48,18 @@ function CancelTransport({ user, driverState, setDriverState, onLogout }) {
       setKm(n);
       localStorage.setItem('cancel_km', n);
     }
+  }
+
+  function handleRequestConfirm() {
+    if (km <= 0) {
+      showErr(tx.cancel_err_km || "Has d'introduir una distància vàlida (major que 0).");
+      return;
+    }
+    if (!reason || reason.trim() === '') {
+      showErr(tx.cancel_err_reason || "Has d'introduir el motiu de la cancel·lació.");
+      return;
+    }
+    setShowModal(true);
   }
 
   function handleConfirm() {
@@ -109,6 +117,10 @@ function CancelTransport({ user, driverState, setDriverState, onLogout }) {
                 <p className="if-value">{assignedTruck?.model || '—'}</p>
               </div>
               <div className="info-field">
+                <p className="if-label">{tx.field_dest}</p>
+                <p className="if-value">{assignedTransport?.destination || '—'}</p>
+              </div>
+              <div className="info-field">
                 <p className="if-label">{tx.field_weight_max}</p>
                 <p className="if-value">{assignedTruck?.capacity || '—'}</p>
               </div>
@@ -117,16 +129,12 @@ function CancelTransport({ user, driverState, setDriverState, onLogout }) {
                 <p className="if-value">{assignedTruck?.plate || '—'}</p>
               </div>
               <div className="info-field">
-                <p className="if-label">{tx.field_volume}</p>
-                <p className="if-value">{assignedTransport?.volume || '—'}</p>
-              </div>
-              <div className="info-field">
                 <p className="if-label">{tx.field_origin}</p>
                 <p className="if-value">{assignedTransport?.origin || '—'}</p>
               </div>
               <div className="info-field">
-                <p className="if-label">{tx.field_dest}</p>
-                <p className="if-value">{assignedTransport?.destination || '—'}</p>
+                <p className="if-label">{tx.field_volume}</p>
+                <p className="if-value">{assignedTransport?.volume || '—'}</p>
               </div>
             </div>
             <div className="truck-img-wrap">
@@ -137,8 +145,8 @@ function CancelTransport({ user, driverState, setDriverState, onLogout }) {
 
         {/* ── Error ── */}
         {errMsg && (
-          <div role="alert" style={{ display:'flex', alignItems:'center', gap:'12px', padding:'10px 14px', marginBottom:'18px', borderRadius:'12px', fontSize:'var(--font-size-lg)', fontWeight:500, width:'100%', boxSizing:'border-box', border:'1.5px solid #ff5a5a', background:'#fff1f1', color:'#e03030' }}>
-            <span style={{display:'flex',alignItems:'center',flexShrink:0}}><AlertCircle size={18} /></span>
+          <div role="alert" style={{ display:'flex', alignItems:'center', gap:'12px', padding:'10px 14px', marginBottom:'18px', borderRadius:'12px', fontSize:'1.15rem', fontWeight:500, width:'100%', boxSizing:'border-box', border:'1.5px solid #ff5a5a', background:'#fff1f1', color:'#e03030' }}>
+            <span style={{display:'flex',alignItems:'center',flexShrink:0}}><AlertCircle size={20} /></span>
             <span style={{flex:1,textAlign:'center'}}>{errMsg}</span>
             <button style={{background:'none',border:'none',cursor:'pointer',fontSize:'18px',color:'#e03030'}} onClick={() => { clearTimeout(errTimer.current); setErrMsg(''); }} aria-label="Tancar">✕</button>
           </div>
@@ -192,7 +200,7 @@ function CancelTransport({ user, driverState, setDriverState, onLogout }) {
 
         {/* ── Botons ── */}
         <div className="action-buttons">
-          <button className="btn--confirm btn--field-shape" onClick={() => setShowModal(true)} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <button className="btn--confirm btn--field-shape" onClick={handleRequestConfirm} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <CircleCheckBig size={20} /> {tx.finish_confirm}
           </button>
           <button className="btn--cancel-op btn--field-shape" onClick={() => navigate('/dashboard')} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>

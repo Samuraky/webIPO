@@ -31,13 +31,9 @@ function FinishTransport({ user, driverState, setDriverState, onLogout }) {
 
   /* ── Notificació informativa en entrar ── */
   useEffect(() => {
-    const savedKm = localStorage.getItem('finish_km');
-    const savedNotes = localStorage.getItem('finish_notes');
-    if (!savedKm || !savedNotes) {
-      setInfoMsg(tx.finish_info_required || 'Introdueix les dades (Km Reals i Text incidències) per confirmar la finalització del transport.');
-      clearTimeout(infoTimer.current);
-      infoTimer.current = setTimeout(() => setInfoMsg(''), 15000);
-    }
+    setInfoMsg(tx.finish_info_required || 'Introdueix les dades (Km Reals i Text incidències) per confirmar la finalització del transport.');
+    clearTimeout(infoTimer.current);
+    infoTimer.current = setTimeout(() => setInfoMsg(''), 15000);
   }, []);
 
   function showErr(msg) {
@@ -52,6 +48,18 @@ function FinishTransport({ user, driverState, setDriverState, onLogout }) {
       setKm(n);
       localStorage.setItem('finish_km', n);
     }
+  }
+
+  function handleRequestConfirm() {
+    if (km <= 0) {
+      showErr(tx.finish_err_km || "Has d'introduir una distància vàlida (major que 0).");
+      return;
+    }
+    if (!notes || notes.trim() === '') {
+      showErr(tx.finish_err_notes || "Has d'introduir el text de les incidències.");
+      return;
+    }
+    setShowModal(true);
   }
 
   function handleConfirm() {
@@ -109,6 +117,10 @@ function FinishTransport({ user, driverState, setDriverState, onLogout }) {
                 <p className="if-value">{assignedTruck?.model || '—'}</p>
               </div>
               <div className="info-field">
+                <p className="if-label">{tx.field_dest}</p>
+                <p className="if-value">{assignedTransport?.destination || '—'}</p>
+              </div>
+              <div className="info-field">
                 <p className="if-label">{tx.field_weight_max}</p>
                 <p className="if-value">{assignedTruck?.capacity || '—'}</p>
               </div>
@@ -117,16 +129,12 @@ function FinishTransport({ user, driverState, setDriverState, onLogout }) {
                 <p className="if-value">{assignedTruck?.plate || '—'}</p>
               </div>
               <div className="info-field">
-                <p className="if-label">{tx.field_volume}</p>
-                <p className="if-value">{assignedTransport?.volume || '—'}</p>
-              </div>
-              <div className="info-field">
                 <p className="if-label">{tx.field_origin}</p>
                 <p className="if-value">{assignedTransport?.origin || '—'}</p>
               </div>
               <div className="info-field">
-                <p className="if-label">{tx.field_dest}</p>
-                <p className="if-value">{assignedTransport?.destination || '—'}</p>
+                <p className="if-label">{tx.field_volume}</p>
+                <p className="if-value">{assignedTransport?.volume || '—'}</p>
               </div>
             </div>
             <div className="truck-img-wrap">
@@ -137,8 +145,8 @@ function FinishTransport({ user, driverState, setDriverState, onLogout }) {
 
         {/* ── Error ── */}
         {errMsg && (
-          <div role="alert" style={{ display:'flex', alignItems:'center', gap:'12px', padding:'10px 14px', marginBottom:'18px', borderRadius:'12px', fontSize:'var(--font-size-lg)', fontWeight:500, width:'100%', boxSizing:'border-box', border:'1.5px solid #ff5a5a', background:'#fff1f1', color:'#e03030' }}>
-            <span style={{display:'flex',alignItems:'center',flexShrink:0}}><AlertCircle size={18} /></span>
+          <div role="alert" style={{ display:'flex', alignItems:'center', gap:'12px', padding:'10px 14px', marginBottom:'18px', borderRadius:'12px', fontSize:'1.15rem', fontWeight:500, width:'100%', boxSizing:'border-box', border:'1.5px solid #ff5a5a', background:'#fff1f1', color:'#e03030' }}>
+            <span style={{display:'flex',alignItems:'center',flexShrink:0}}><AlertCircle size={20} /></span>
             <span style={{flex:1,textAlign:'center'}}>{errMsg}</span>
             <button style={{background:'none',border:'none',cursor:'pointer',fontSize:'18px',color:'#e03030'}} onClick={() => { clearTimeout(errTimer.current); setErrMsg(''); }} aria-label="Tancar">✕</button>
           </div>
@@ -192,7 +200,7 @@ function FinishTransport({ user, driverState, setDriverState, onLogout }) {
 
         {/* ── Botons ── */}
         <div className="action-buttons">
-          <button className="btn--confirm btn--field-shape" onClick={() => setShowModal(true)} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <button className="btn--confirm btn--field-shape" onClick={handleRequestConfirm} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <CircleCheckBig size={20} /> {tx.finish_confirm}
           </button>
           <button className="btn--cancel-op btn--field-shape" onClick={() => navigate('/dashboard')} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
