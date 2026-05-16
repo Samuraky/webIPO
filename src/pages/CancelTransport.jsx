@@ -1,20 +1,26 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, Info, AlertCircle } from 'lucide-react';
+import { ChevronLeft, Info, AlertCircle, Truck, Gauge } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import { useLang } from '../context/LangContext';
 import { t } from '../i18n/translations';
 
 const TRUCK_IMG = 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=400&q=80';
 
-function CancelTransport({ user, driverState, setDriverState }) {
+function CancelTransport({ user, driverState, setDriverState, onLogout }) {
   const navigate = useNavigate();
   const { lang } = useLang();
   const tx = t[lang];
   const { assignedTruck, assignedTransport } = driverState;
 
-  const [km, setKm] = useState(1000);
-  const [reason, setReason] = useState('');
+  const [km, setKm] = useState(() => {
+    const saved = localStorage.getItem('cancel_km');
+    return saved ? Number(saved) : 1000;
+  });
+  const [reason, setReason] = useState(() => {
+    const saved = localStorage.getItem('cancel_reason');
+    return saved || '';
+  });
   const [showModal, setShowModal] = useState(false);
   const [showDoneModal, setShowDoneModal] = useState(false);
   const [done, setDone] = useState(false);
@@ -29,7 +35,10 @@ function CancelTransport({ user, driverState, setDriverState }) {
 
   function handleKmChange(val) {
     const n = Math.max(0, Math.min(5000, Number(val)));
-    if (!isNaN(n)) setKm(n);
+    if (!isNaN(n)) {
+      setKm(n);
+      localStorage.setItem('cancel_km', n);
+    }
   }
 
   function handleConfirm() {
@@ -38,6 +47,8 @@ function CancelTransport({ user, driverState, setDriverState }) {
   }
 
   function handleDone() {
+    localStorage.removeItem('cancel_km');
+    localStorage.removeItem('cancel_reason');
     setDriverState(prev => ({ ...prev, hasTransport: false, assignedTransport: null }));
     navigate('/dashboard');
   }
@@ -46,7 +57,7 @@ function CancelTransport({ user, driverState, setDriverState }) {
   if (done) {
     return (
       <div className="page-wrapper">
-        <Navbar variant="driver" userName={user?.name || 'Conductor'} />
+        <Navbar variant="driver" userName={user?.name || 'Conductor'} onLogout={onLogout} />
         <main className="page-content page-content--xl dashboard-main">
           <div style={{ maxWidth: '500px', margin: '4rem auto' }}>
             <div className="modal-box">
@@ -63,13 +74,13 @@ function CancelTransport({ user, driverState, setDriverState }) {
 
   return (
     <div className="page-wrapper">
-      <Navbar variant="driver" userName={user?.name || 'Conductor'} />
+      <Navbar variant="driver" userName={user?.name || 'Conductor'} onLogout={onLogout} />
 
       <main className="page-content page-content--xl dashboard-main">
 
         {/* ── Títol + Enrere ── */}
         <div className="page-title-bar">
-          <button className="btn--back" onClick={() => navigate('/dashboard')}>
+          <button className="btn--back" onClick={() => navigate('/dashboard')} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <ChevronLeft size={15} /> {tx.btn_back}
           </button>
           <h2>{tx.cancel_title}</h2>
@@ -77,8 +88,8 @@ function CancelTransport({ user, driverState, setDriverState }) {
 
         {/* ── Info camió ── */}
         <section className="truck-info-card" aria-label="Informació del camió">
-          <p className="tic-header">{tx.finish_truck}</p>
-          <div style={{ display: 'flex', gap: 'var(--sp-4)', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+          <p className="tic-header"><Truck size={20} /> {tx.finish_truck}</p>
+          <div style={{ display: 'flex', gap: 'var(--sp-4)', alignItems: 'center', flexWrap: 'wrap' }}>
             <div className="tic-grid" style={{ flex: 1, minWidth: '15rem' }}>
               <div className="info-field">
                 <p className="if-label">{tx.field_name}</p>
@@ -122,7 +133,7 @@ function CancelTransport({ user, driverState, setDriverState }) {
 
         {/* ── Distància ── */}
         <div className="form-group">
-          <label className="range-label" htmlFor="kmNum">{tx.cancel_dist}</label>
+          <label className="range-label" htmlFor="kmNum"><Gauge size={20} /> {tx.cancel_dist}</label>
           <div className="range-row">
             <input
               type="range" id="kmRange"
@@ -150,7 +161,10 @@ function CancelTransport({ user, driverState, setDriverState }) {
             className="form-textarea" id="motiu"
             placeholder={tx.cancel_reason_ph}
             rows={5} value={reason}
-            onChange={e => setReason(e.target.value)}
+            onChange={e => {
+              setReason(e.target.value);
+              localStorage.setItem('cancel_reason', e.target.value);
+            }}
           />
         </div>
 

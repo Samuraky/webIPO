@@ -393,7 +393,6 @@ function DriverDashboard({ user, driverState, setDriverState, onLogout }) {
                       ) : (
                         <button
                           onClick={() => handleRequestAssign(tr)}
-                          disabled={!hasTruck}
                           style={{
                             display: 'inline-flex',
                             alignItems: 'center',
@@ -405,7 +404,7 @@ function DriverDashboard({ user, driverState, setDriverState, onLogout }) {
                             color: !hasTruck ? '#999' : (hasTransport || !isToday(tr.date) ? '#888' : 'var(--color-primary)'),
                             fontSize: '0.9rem',
                             fontWeight: 600,
-                            cursor: !hasTruck ? 'not-allowed' : 'pointer',
+                            cursor: 'pointer',
                             transition: 'all 0.2s ease'
                           }}
                           onMouseEnter={(e) => {
@@ -468,7 +467,6 @@ function DriverDashboard({ user, driverState, setDriverState, onLogout }) {
                   ) : (
                     <button
                       onClick={() => handleRequestAssign(tr)}
-                      disabled={!hasTruck}
                       style={{
                         padding: '6px 14px',
                         borderRadius: '6px',
@@ -477,7 +475,7 @@ function DriverDashboard({ user, driverState, setDriverState, onLogout }) {
                         color: !hasTruck ? '#999' : (hasTransport || !isToday(tr.date) ? '#888' : 'var(--color-primary)'),
                         fontSize: '0.85rem',
                         fontWeight: 600,
-                        cursor: !hasTruck ? 'not-allowed' : 'pointer'
+                        cursor: 'pointer'
                       }}
                     >
                       {tx.btn_assign}

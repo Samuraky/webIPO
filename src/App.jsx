@@ -76,7 +76,7 @@ function App() {
           path="/finish-transport"
           element={
             <PrivateRoute>
-              <FinishTransport user={user} driverState={driverState} setDriverState={setDriverState} />
+              <FinishTransport user={user} driverState={driverState} setDriverState={setDriverState} onLogout={handleLogout} />
             </PrivateRoute>
           }
         />
@@ -84,7 +84,7 @@ function App() {
           path="/cancel-transport"
           element={
             <PrivateRoute>
-              <CancelTransport user={user} driverState={driverState} setDriverState={setDriverState} />
+              <CancelTransport user={user} driverState={driverState} setDriverState={setDriverState} onLogout={handleLogout} />
             </PrivateRoute>
           }
         />

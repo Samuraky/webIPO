@@ -1,20 +1,26 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, Info, AlertCircle } from 'lucide-react';
+import { ChevronLeft, Info, AlertCircle, CircleCheckBig, X, Truck, Gauge } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import { useLang } from '../context/LangContext';
 import { t } from '../i18n/translations';
 
 const TRUCK_IMG = 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=400&q=80';
 
-function FinishTransport({ user, driverState, setDriverState }) {
+function FinishTransport({ user, driverState, setDriverState, onLogout }) {
   const navigate = useNavigate();
   const { lang } = useLang();
   const tx = t[lang];
   const { assignedTruck, assignedTransport } = driverState;
 
-  const [km, setKm] = useState(1000);
-  const [notes, setNotes] = useState('');
+  const [km, setKm] = useState(() => {
+    const saved = localStorage.getItem('finish_km');
+    return saved ? Number(saved) : 1000;
+  });
+  const [notes, setNotes] = useState(() => {
+    const saved = localStorage.getItem('finish_notes');
+    return saved || '';
+  });
   const [showModal, setShowModal] = useState(false);
   const [showDoneModal, setShowDoneModal] = useState(false);
   const [done, setDone] = useState(false);
@@ -29,7 +35,10 @@ function FinishTransport({ user, driverState, setDriverState }) {
 
   function handleKmChange(val) {
     const n = Math.max(0, Math.min(5000, Number(val)));
-    if (!isNaN(n)) setKm(n);
+    if (!isNaN(n)) {
+      setKm(n);
+      localStorage.setItem('finish_km', n);
+    }
   }
 
   function handleConfirm() {
@@ -38,6 +47,8 @@ function FinishTransport({ user, driverState, setDriverState }) {
   }
 
   function handleDone() {
+    localStorage.removeItem('finish_km');
+    localStorage.removeItem('finish_notes');
     setDriverState(prev => ({ ...prev, hasTransport: false, assignedTransport: null }));
     navigate('/dashboard');
   }
@@ -46,7 +57,7 @@ function FinishTransport({ user, driverState, setDriverState }) {
   if (done) {
     return (
       <div className="page-wrapper">
-        <Navbar variant="driver" userName={user?.name || 'Conductor'} />
+        <Navbar variant="driver" userName={user?.name || 'Conductor'} onLogout={onLogout} />
         <main className="page-content page-content--xl dashboard-main">
           <div className="modal-backdrop" style={{ position: 'static', background: 'none', padding: 0, display: 'block' }}>
             <div className="modal-box" style={{ margin: '4rem auto' }}>
@@ -63,13 +74,13 @@ function FinishTransport({ user, driverState, setDriverState }) {
 
   return (
     <div className="page-wrapper">
-      <Navbar variant="driver" userName={user?.name || 'Conductor'} />
+      <Navbar variant="driver" userName={user?.name || 'Conductor'} onLogout={onLogout} />
 
       <main className="page-content page-content--xl dashboard-main">
 
         {/* ── Títol + Enrere ── */}
         <div className="page-title-bar">
-          <button className="btn--back" onClick={() => navigate('/dashboard')}>
+          <button className="btn--back" onClick={() => navigate('/dashboard')} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <ChevronLeft size={15} /> {tx.btn_back}
           </button>
           <h2>{tx.finish_title}</h2>
@@ -77,8 +88,8 @@ function FinishTransport({ user, driverState, setDriverState }) {
 
         {/* ── Info camió ── */}
         <section className="truck-info-card" aria-label="Informació del camió">
-          <p className="tic-header">{tx.finish_truck}</p>
-          <div style={{ display: 'flex', gap: 'var(--sp-4)', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+          <p className="tic-header"><Truck size={20} /> {tx.finish_truck}</p>
+          <div style={{ display: 'flex', gap: 'var(--sp-4)', alignItems: 'center', flexWrap: 'wrap' }}>
             <div className="tic-grid" style={{ flex: 1, minWidth: '15rem' }}>
               <div className="info-field">
                 <p className="if-label">{tx.field_name}</p>
@@ -122,7 +133,7 @@ function FinishTransport({ user, driverState, setDriverState }) {
 
         {/* ── Km Reals ── */}
         <div className="form-group">
-          <label className="range-label" htmlFor="kmNum">{tx.finish_km}</label>
+          <label className="range-label" htmlFor="kmNum"><Gauge size={20} /> {tx.finish_km}</label>
           <div className="range-row">
             <input
               type="range" id="kmRange"
@@ -150,17 +161,20 @@ function FinishTransport({ user, driverState, setDriverState }) {
             className="form-textarea" id="incidencies"
             placeholder={tx.finish_incidents_ph}
             rows={5} value={notes}
-            onChange={e => setNotes(e.target.value)}
+            onChange={e => {
+              setNotes(e.target.value);
+              localStorage.setItem('finish_notes', e.target.value);
+            }}
           />
         </div>
 
         {/* ── Botons ── */}
         <div className="action-buttons">
-          <button className="btn--confirm btn--field-shape" onClick={() => setShowModal(true)}>
-            {tx.finish_confirm}
+          <button className="btn--confirm btn--field-shape" onClick={() => setShowModal(true)} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <CircleCheckBig size={20} /> {tx.finish_confirm}
           </button>
-          <button className="btn--cancel-op btn--field-shape" onClick={() => navigate('/dashboard')}>
-            {tx.finish_cancel}
+          <button className="btn--cancel-op btn--field-shape" onClick={() => navigate('/dashboard')} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <X size={20} /> {tx.finish_cancel}
           </button>
         </div>
 
