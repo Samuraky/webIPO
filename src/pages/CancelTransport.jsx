@@ -170,11 +170,11 @@ function CancelTransport({ user, driverState, setDriverState, onLogout }) {
 
         {/* ── Botons ── */}
         <div className="action-buttons">
-          <button className="btn--confirm btn--field-shape" onClick={() => setShowModal(true)}>
-            {tx.finish_confirm}
+          <button className="btn--confirm btn--field-shape" onClick={() => setShowModal(true)} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <CircleCheckBig size={20} /> {tx.finish_confirm}
           </button>
-          <button className="btn--cancel-op btn--field-shape" onClick={() => navigate('/dashboard')}>
-            {tx.finish_cancel}
+          <button className="btn--cancel-op btn--field-shape" onClick={() => navigate('/dashboard')} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <X size={20} /> {tx.finish_cancel}
           </button>
         </div>
 

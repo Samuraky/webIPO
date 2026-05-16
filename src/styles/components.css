@@ -1142,7 +1142,7 @@ input[type="number"].no-spin { -moz-appearance: textfield; appearance: textfield
   font-family: var(--font);
   transition: background 0.2s;
 }
-.modal-actions .btn--primary:hover { background: #5750ad; }
+.modal-actions .btn--primary:hover { background: var(--color-light2); color: var(--color-primary); }
 
 .modal-actions .btn--outline {
   width: 240px; height: 56px;
@@ -1170,7 +1170,7 @@ input[type="number"].no-spin { -moz-appearance: textfield; appearance: textfield
   cursor: pointer; font-family: var(--font);
   transition: background 0.2s;
 }
-.modal-actions .btn--confirm:hover { background: #5750ad; }
+.modal-actions .btn--confirm:hover { background: var(--color-light2); color: var(--color-primary); }
 .modal-actions .btn--cancel,
 .modal-actions .btn--cancel-op {
   height: 48px; font-size: var(--font-size-lg); font-weight: 700;
