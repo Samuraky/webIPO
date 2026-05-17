@@ -3,16 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import { User, Settings, LogOut } from 'lucide-react';
 import { useLang } from '../context/LangContext';
 import { t } from '../i18n/translations';
+import { useLocation } from 'react-router-dom';
 
 function UserDropdown({ userName, onLogout }) {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const { lang } = useLang();
   const tx = t[lang];
 
   function handleEdit() {
     setOpen(false);
-    navigate('/edit-profile');
+
+    navigate('/edit-profile', {
+      state: {
+        from: location.pathname
+      }
+    });
   }
 
   function handleLogout() {
