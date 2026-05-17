@@ -59,7 +59,7 @@ export const t = {
     dash_unassign_truck: 'Desassignar camió',
     dash_no_truck:    'Sense camió assignat',
     dash_no_transport:'Sense transport assignat',
-    dash_truck_title: 'Transport assignat',
+    dash_truck_title: 'Camió assignat',
     dash_transport_title: 'Transport assignat',
     col_date:   'Data',
     col_origin: 'Origen',
@@ -95,7 +95,7 @@ export const t = {
 
     /* FinishTransport */
     finish_title: 'FINALITZAR TRANSPORT',
-    finish_truck: 'Camió assignat:',
+    finish_truck: 'Tnansport assignat:',
     finish_info_msg: 'Text no editable: Missatge informatiu',
     finish_km:   'Km Reals:',
     finish_incidents: "Text d'incidències",
@@ -196,7 +196,7 @@ export const t = {
     dash_unassign_truck: 'Desasignar camión',
     dash_no_truck:    'Sin camión asignado',
     dash_no_transport:'Sin transporte asignado',
-    dash_truck_title: 'Transport asignado',
+    dash_truck_title: 'Camion asignado',
     dash_transport_title: 'Transporte asignado',
     col_date:   'Fecha',
     col_origin: 'Origen',
@@ -230,7 +230,7 @@ export const t = {
     field_volume: 'Volumen',
 
     finish_title:   'FINALIZAR TRANSPORTE',
-    finish_truck:   'Camión asignado:',
+    finish_truck:   'Transporte asignado:',
     finish_info_msg:'Texto no editable: Mensaje informativo',
     finish_km:      'Km Reales:',
     finish_incidents:    'Texto de incidencias',
@@ -333,7 +333,7 @@ export const t = {
     dash_unassign_truck: 'Unassign truck',
     dash_no_truck:    'No truck assigned',
     dash_no_transport:'No transport assigned',
-    dash_truck_title: 'Assigned transport',
+    dash_truck_title: 'Assigned truck',
     dash_transport_title: 'Assigned transport',
     col_date:   'Date',
     col_origin: 'Origin',
@@ -367,7 +367,7 @@ export const t = {
     field_volume: 'Volume',
 
     finish_title:   'FINISH TRANSPORT',
-    finish_truck:   'Assigned truck:',
+    finish_truck:   'Assigned transport:',
     finish_info_msg:'Non-editable text: Informational message',
     finish_km:      'Actual Km:',
     finish_incidents:    'Incidents',
