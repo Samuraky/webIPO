@@ -31,7 +31,7 @@ function FinishTransport({ user, driverState, setDriverState, onLogout }) {
 
   /* ── Notificació informativa en entrar ── */
   useEffect(() => {
-    setInfoMsg(tx.finish_info_required || 'Introdueix les dades (Km Reals i Text incidències) per confirmar la finalització del transport.');
+    setInfoMsg(tx.finish_info_required || 'Introdueix les dades (Km Reals) per confirmar la finalització del transport.');
     clearTimeout(infoTimer.current);
     infoTimer.current = setTimeout(() => setInfoMsg(''), 15000);
   }, [lang]);
