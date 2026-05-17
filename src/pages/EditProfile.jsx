@@ -72,28 +72,28 @@ function EditProfile({ user, onUpdateUser, onLogout }) {
   }
 
   function handleSubmit(e) {
-  e.preventDefault();
+    e.preventDefault();
 
-  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email);
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email);
 
-  if (!form.address || !form.phone || !form.email) {
-    showError(tx.edit_err_missing || 'Falten dades per informar.');
-    return;
+    if (!form.address || !form.phone || !form.email) {
+      showError(tx.edit_err_missing || 'Falten dades per informar.');
+      return;
+    }
+
+    if (!emailOk) {
+      showError('Email no válido');
+      return;
+    }
+
+    setShowModal(true);
   }
 
-  if (!emailOk) {
-    showError('Email no válido');
-    return;
+  function handleConfirm() {
+    setShowModal(false);
+    setShowDoneModal(true);
+
   }
-
-  setShowModal(true);
-}
-
-function handleConfirm() {
-  setShowModal(false);
-  setShowDoneModal(true);
-
-}
   return (
     <div className="page-wrapper">
       <Navbar variant="driver" userName={user?.name || 'Conductor'} onLogout={onLogout} />
