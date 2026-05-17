@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Lock, User, AlertCircle, CircleCheckBig } from 'lucide-react';
 import Navbar from '../components/Navbar';
+import { users } from '../data/mockData';
 import { useLang } from '../context/LangContext';
 import { t } from '../i18n/translations';
 
@@ -31,6 +32,12 @@ function ForgotPassword() {
     e.preventDefault();
     if (!dni.trim()) {
       showError('forgot_err');
+      return;
+    }
+    // Verificar si l'usuari existeix
+    const userExists = users.some(u => u.dni === dni.trim());
+    if (!userExists) {
+      showError('forgot_err_not_found');
       return;
     }
     setShowModal(true);

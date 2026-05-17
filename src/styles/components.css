@@ -511,6 +511,11 @@
   height:       5px;
   cursor:       pointer;
   background:   #000000;
+  border-radius: 3px;
+  transition:   background 0.2s ease;
+}
+.range-row input[type="range"]:hover {
+  background:   #444444;
 }
 .range-number-box {
   display:       flex;

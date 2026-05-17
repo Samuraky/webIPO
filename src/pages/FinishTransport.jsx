@@ -117,6 +117,10 @@ function FinishTransport({ user, driverState, setDriverState, onLogout }) {
                 <p className="if-value">{assignedTruck?.model || '—'}</p>
               </div>
               <div className="info-field">
+                <p className="if-label">{tx.field_dest}</p>
+                <p className="if-value">{assignedTransport?.destination || '—'}</p>
+              </div>
+              <div className="info-field">
                 <p className="if-label">{tx.field_weight_max}</p>
                 <p className="if-value">{assignedTruck?.capacity || '—'}</p>
               </div>
@@ -125,16 +129,12 @@ function FinishTransport({ user, driverState, setDriverState, onLogout }) {
                 <p className="if-value">{assignedTruck?.plate || '—'}</p>
               </div>
               <div className="info-field">
-                <p className="if-label">{tx.field_volume}</p>
-                <p className="if-value">{assignedTransport?.volume || '—'}</p>
-              </div>
-              <div className="info-field">
                 <p className="if-label">{tx.field_origin}</p>
                 <p className="if-value">{assignedTransport?.origin || '—'}</p>
               </div>
               <div className="info-field">
-                <p className="if-label">{tx.field_dest}</p>
-                <p className="if-value">{assignedTransport?.destination || '—'}</p>
+                <p className="if-label">{tx.field_volume}</p>
+                <p className="if-value">{assignedTransport?.volume || '—'}</p>
               </div>
             </div>
             <div className="truck-img-wrap">
