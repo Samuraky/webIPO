@@ -118,7 +118,7 @@ function FinishTransport({ user, driverState, setDriverState, onLogout }) {
               </div>
               <div className="info-field">
                 <p className="if-label">{tx.field_weight_max}</p>
-                <p className="if-value">{assignedTruck?.capacity || '—'}</p>
+                <p className="if-value">{assignedTransport?.weight || '—'}</p>
               </div>
               <div className="info-field">
                 <p className="if-label">{tx.field_plate}</p>
