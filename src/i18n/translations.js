@@ -96,7 +96,7 @@ export const t = {
 
     /* FinishTransport */
     finish_title: 'FINALITZAR TRANSPORT',
-    finish_truck: 'Camió assignat:',
+    finish_truck: 'Tnansport assignat:',
     finish_info_msg: 'Text no editable: Missatge informatiu',
     finish_km:   'Km Reals:',
     finish_incidents: "Text d'incidències",
@@ -197,7 +197,7 @@ export const t = {
     dash_unassign_truck: 'Desasignar camión',
     dash_no_truck:    'Sin camión asignado',
     dash_no_transport:'Sin transporte asignado',
-    dash_truck_title: 'Camión asignado',
+    dash_truck_title: 'Camion asignado',
     dash_transport_title: 'Transporte asignado',
     col_date:   'Fecha',
     col_origin: 'Origen',
@@ -232,7 +232,7 @@ export const t = {
     field_transport: 'Transporte asignado',
 
     finish_title:   'FINALIZAR TRANSPORTE',
-    finish_truck:   'Camión asignado:',
+    finish_truck:   'Transporte asignado:',
     finish_info_msg:'Texto no editable: Mensaje informativo',
     finish_km:      'Km Reales:',
     finish_incidents:    'Texto de incidencias',
@@ -370,7 +370,7 @@ export const t = {
     field_transport: 'Assigned transport',
 
     finish_title:   'FINISH TRANSPORT',
-    finish_truck:   'Assigned truck:',
+    finish_truck:   'Assigned transport:',
     finish_info_msg:'Non-editable text: Informational message',
     finish_km:      'Actual Km:',
     finish_incidents:    'Incidents',
