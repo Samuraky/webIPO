@@ -243,7 +243,7 @@ export const t = {
     finish_done:    'Transporte finalizado',
     finish_err_km: 'Debes introducir una distancia válida (mayor que 0).',
     finish_err_notes: 'Debes introducir el texto de las incidencias.',
-    finish_info_required: 'Introduce los datos (Km Reales y Texto incidencias) para confirmar la finalización del transporte.',
+    finish_info_required: 'Introduce los datos (Km Reales) para confirmar la finalización del transporte.',
 
     cancel_title:     'CANCELAR TRANSPORTE',
     cancel_dist:      'Distancia (Km):',
@@ -253,7 +253,7 @@ export const t = {
     cancel_done:      'Transporte cancelado',
     cancel_err_km: 'Debes introducir una distancia válida (mayor que 0).',
     cancel_err_reason: 'Debes introducir el motivo de la cancelación.',
-    cancel_info_required: 'Introduce la distancia y el motivo de cancelación para confirmar la cancelación del transporte.',
+    cancel_info_required: 'Introduce el motivo de cancelación para confirmar la cancelación del transporte.',
 
     edit_title:  'DATOS DEL CONDUCTOR',
     edit_dni:    'DNI',
@@ -381,7 +381,7 @@ export const t = {
     finish_done:    'Transport finished',
     finish_err_km: 'You must enter a valid distance (greater than 0).',
     finish_err_notes: 'You must enter the incidents text.',
-    finish_info_required: 'Enter the data (Actual Km and Incidents text) to confirm transport completion.',
+    finish_info_required: 'Enter the data (Actual Km) to confirm transport completion.',
 
     cancel_title:     'CANCEL TRANSPORT',
     cancel_dist:      'Distance (Km):',
@@ -391,7 +391,7 @@ export const t = {
     cancel_done:      'Transport cancelled',
     cancel_err_km: 'You must enter a valid distance (greater than 0).',
     cancel_err_reason: 'You must enter the reason for cancellation.',
-    cancel_info_required: 'Enter the distance and cancellation reason to confirm transport cancellation.',
+    cancel_info_required: 'Enter the reason for cancellation to confirm the cancellation of the transport.',
 
     edit_title:  'DRIVER DATA',
     edit_dni:    'ID / DNI',
