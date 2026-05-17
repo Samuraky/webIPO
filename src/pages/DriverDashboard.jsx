@@ -74,6 +74,11 @@ function DriverDashboard({ user, driverState, setDriverState, onLogout }) {
 
   function handleConfirmAssign() {
     const msg = tx.notif_assigned;
+    // Esborrar dades antigues del localStorage quan s'assigna un nou transport
+    localStorage.removeItem('finish_km');
+    localStorage.removeItem('finish_notes');
+    localStorage.removeItem('cancel_km');
+    localStorage.removeItem('cancel_reason');
     setDriverState(prev => ({ ...prev, hasTransport: true, assignedTransport: pendingTransport }));
     setShowModal(false);
     setPendingTransport(null);

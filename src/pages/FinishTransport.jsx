@@ -34,7 +34,11 @@ function FinishTransport({ user, driverState, setDriverState, onLogout }) {
     setInfoMsg(tx.finish_info_required || 'Introdueix les dades (Km Reals i Text incidències) per confirmar la finalització del transport.');
     clearTimeout(infoTimer.current);
     infoTimer.current = setTimeout(() => setInfoMsg(''), 15000);
+<<<<<<< HEAD
   }, []);
+=======
+  }, [lang]);
+>>>>>>> e9f3f6700fc52c703c751a4c69ae70591d048d1c
 
   function showErr(msg) {
     setErrMsg(msg);

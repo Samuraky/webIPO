@@ -456,7 +456,7 @@
   color:       var(--color-dark);
   background:  transparent;
 }
-.input-wrapper input::placeholder { color: #666666; }
+.input-wrapper input::placeholder { color: #444444; }
 .input-wrapper input:disabled      { cursor: not-allowed; color: var(--color-text-muted); }
 
 .iw-toggle {
@@ -511,6 +511,11 @@
   height:       5px;
   cursor:       pointer;
   background:   #000000;
+  border-radius: 3px;
+  transition:   background 0.2s ease;
+}
+.range-row input[type="range"]:hover {
+  background:   #444444;
 }
 .range-number-box {
   display:       flex;

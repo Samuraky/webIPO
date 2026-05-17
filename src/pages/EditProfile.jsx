@@ -1,6 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
 import { ChevronLeft, User, MapPin, Phone, Mail, Lock, Eye, EyeOff, FileImage, AlertCircle, CircleCheckBig, X } from 'lucide-react';
+=======
+import { ChevronLeft, User, MapPin, Phone, Mail, Lock, Eye, EyeOff, FileImage, AlertCircle, CheckCircle } from 'lucide-react';
+>>>>>>> e9f3f6700fc52c703c751a4c69ae70591d048d1c
 import Navbar from '../components/Navbar';
 import { useLang } from '../context/LangContext';
 import { t } from '../i18n/translations';
@@ -221,10 +225,17 @@ function EditProfile({ user, onUpdateUser, onLogout }) {
             <p className="modal-title">{tx.edit_modal_q}</p>
             <div className="modal-actions">
               <button type="button" className="btn--confirm btn--field-shape" onClick={handleConfirm} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+<<<<<<< HEAD
                 <CircleCheckBig size={20} /> {tx.modal_yes || 'Sí'}
               </button>
               <button type="button" className="btn--cancel-op btn--field-shape" onClick={() => setShowModal(false)} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <X size={20} /> {tx.modal_no || 'No'}
+=======
+                <CheckCircle size={20} /> {tx.modal_yes || 'Sí'}
+              </button>
+              <button type="button" className="btn--cancel btn--field-shape" onClick={() => setShowModal(false)} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ fontSize: '20px', lineHeight: 1 }}>✕</span> {tx.modal_no || 'No'}
+>>>>>>> e9f3f6700fc52c703c751a4c69ae70591d048d1c
               </button>
             </div>
           </div>
@@ -235,7 +246,11 @@ function EditProfile({ user, onUpdateUser, onLogout }) {
         <div className="modal-backdrop">
           <div className="modal-box">
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
+<<<<<<< HEAD
               <CircleCheckBig size={48} color="var(--color-primary)" />
+=======
+              <CheckCircle size={48} color="var(--color-success)" />
+>>>>>>> e9f3f6700fc52c703c751a4c69ae70591d048d1c
             </div>
             <p className="modal-title">
               {tx.edit_done || 'Dades modificades correctament'}
@@ -243,6 +258,7 @@ function EditProfile({ user, onUpdateUser, onLogout }) {
             <div className="modal-actions">
               <button
                 type="button"
+<<<<<<< HEAD
                 className="btn--confirm btn--field-shape"
                 onClick={() => {
                   onUpdateUser?.({
@@ -258,6 +274,13 @@ function EditProfile({ user, onUpdateUser, onLogout }) {
                 }}
                 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <CircleCheckBig size={20} /> OK
+=======
+                className="btn--primary btn--field-shape"
+                onClick={() => setShowDoneModal(false)}
+                style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+              >
+                <CheckCircle size={20} /> OK
+>>>>>>> e9f3f6700fc52c703c751a4c69ae70591d048d1c
               </button>
             </div>
           </div>
