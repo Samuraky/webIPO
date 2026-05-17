@@ -109,7 +109,7 @@ function FinishTransport({ user, driverState, setDriverState, onLogout }) {
 
         {/* ── Info camió ── */}
         <section className="truck-info-card" aria-label="Informació del camió">
-          <p className="tic-header"><Truck size={20} /> {tx.finish_truck}</p>
+          <p className="tic-header"><Truck size={20} /> {tx.field_transport}</p>
           <div style={{ display: 'flex', gap: 'var(--sp-4)', alignItems: 'center', flexWrap: 'wrap' }}>
             <div className="tic-grid" style={{ flex: 1, minWidth: '15rem' }}>
               <div className="info-field">

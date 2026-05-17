@@ -92,6 +92,7 @@ export const t = {
     field_date:   'Data',
     field_weight: 'Pes',
     field_volume: 'Volum',
+    field_transport: 'Transport assignat',
 
     /* FinishTransport */
     finish_title: 'FINALITZAR TRANSPORT',
@@ -228,6 +229,7 @@ export const t = {
     field_date:   'Fecha',
     field_weight: 'Peso',
     field_volume: 'Volumen',
+    field_transport: 'Transporte asignado',
 
     finish_title:   'FINALIZAR TRANSPORTE',
     finish_truck:   'Camión asignado:',
@@ -365,6 +367,7 @@ export const t = {
     field_date:   'Date',
     field_weight: 'Weight',
     field_volume: 'Volume',
+    field_transport: 'Assigned transport',
 
     finish_title:   'FINISH TRANSPORT',
     finish_truck:   'Assigned truck:',
