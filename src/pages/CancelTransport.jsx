@@ -31,17 +31,10 @@ function CancelTransport({ user, driverState, setDriverState, onLogout }) {
 
   /* ── Notificació informativa en entrar ── */
   useEffect(() => {
-<<<<<<< HEAD
     setInfoMsg(tx.cancel_info_required || 'Introdueix la distància i el motiu de cancel·lació per confirmar');
     clearTimeout(infoTimer.current);
     infoTimer.current = setTimeout(() => setInfoMsg(''), 15000);
   }, []);
-=======
-    setInfoMsg(tx.cancel_info_required || 'Introdueix la distància i el motiu de cancel·lació per confirmar la cancel·lació del transport.');
-    clearTimeout(infoTimer.current);
-    infoTimer.current = setTimeout(() => setInfoMsg(''), 15000);
-  }, [lang]);
->>>>>>> e9f3f6700fc52c703c751a4c69ae70591d048d1c
 
   function showErr(msg) {
     setErrMsg(msg);
