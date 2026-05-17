@@ -49,14 +49,37 @@ function Home() {
       {/* ── Modal vídeo ── */}
       {showVideo && (
         <div className="modal-backdrop" onClick={() => setShowVideo(false)}>
-          <div className="modal-box" onClick={e => e.stopPropagation()} style={{ background: '#000', padding: 0, borderRadius: '1rem', maxWidth: '700px', width: '90%', aspectRatio: '16/9', position: 'relative' }}>
+          <div className="modal-box" onClick={e => e.stopPropagation()}
+            style={{
+              background: '#000',
+              padding: 0,
+              borderRadius: '1rem',
+              maxWidth: '700px',
+              width: '90%',
+              aspectRatio: '16/9',
+              position: 'relative'
+            }}
+          >
             <button
               onClick={() => setShowVideo(false)}
-              style={{ position: 'absolute', top: '0.5rem', right: '0.75rem', background: 'rgba(255,255,255,0.15)', border: 'none', color: 'white', fontSize: '1.25rem', cursor: 'pointer', borderRadius: '50%', width: '2rem', height: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              style={{
+                position: 'absolute',
+                top: '0.5rem',
+                right: '0.75rem',
+                background: 'rgba(255,255,255,0.15)',
+                border: 'none',
+                color: 'white',
+                fontSize: '1.25rem',
+                cursor: 'pointer',
+                borderRadius: '50%',
+                width: '2rem',
+                height: '2rem'
+              }}
             >✕</button>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'white', fontSize: '1rem', padding: '2rem' }}>
-              {tx.video_demo}
-            </div>
+
+            <video controls style={{ width: '100%', height: '100%', borderRadius: '1rem' }}>
+            <source src="v1.mp4" type="video/mp4" />
+            </video>
           </div>
         </div>
       )}
