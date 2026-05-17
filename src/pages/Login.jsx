@@ -60,8 +60,8 @@ function Login({ onLogin }) {
           <h1 className="auth-title">{tx.login_title}</h1>
 
           {errorKey && (
-            <div className={`notification-bar error${fading ? ' nb-fade-out' : ''}`} role="alert">
-              <span className="nb-icon"><AlertCircle size={18} /></span>
+            <div className={`notification-bar error${fading ? ' nb-fade-out' : ''}`} role="alert" style={{ fontSize: '1.15rem' }}>
+              <span className="nb-icon"><AlertCircle size={20} /></span>
               <span className="nb-text">{tx[errorKey]}</span>
               <button className="nb-close" onClick={() => { clearTimeout(timerRef.current); setErrorKey(''); }}>✕</button>
             </div>

@@ -367,6 +367,9 @@ export const t = {
     finish_cancel:  'Cancel operation',
     finish_modal_q: 'Do you want to finish this transport?',
     finish_done:    'Transport finished',
+    finish_err_km: 'You must enter a valid distance (greater than 0).',
+    finish_err_notes: 'You must enter the incidents text.',
+    finish_info_required: 'Enter the data (Actual Km and Incidents text) to confirm transport completion.',
 
     cancel_title:     'CANCEL TRANSPORT',
     cancel_dist:      'Distance (Km):',
@@ -374,6 +377,9 @@ export const t = {
     cancel_reason_ph: 'Describe the reason for cancellation...',
     cancel_modal_q:   'Do you want to cancel this transport?',
     cancel_done:      'Transport cancelled',
+    cancel_err_km: 'You must enter a valid distance (greater than 0).',
+    cancel_err_reason: 'You must enter the reason for cancellation.',
+    cancel_info_required: 'Enter the distance and cancellation reason to confirm transport cancellation.',
 
     edit_title:  'DRIVER DATA',
     edit_dni:    'ID / DNI',

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, User, MapPin, Phone, Mail, Lock, Eye, EyeOff, FileImage } from 'lucide-react';
+import { ChevronLeft, User, MapPin, Phone, Mail, Lock, Eye, EyeOff, FileImage, AlertCircle, CheckCircle } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import { useLang } from '../context/LangContext';
 import { t } from '../i18n/translations';
@@ -112,15 +112,15 @@ function EditProfile({ user, onUpdateUser, onLogout }) {
           <h1 className="auth-title">{tx.edit_title}</h1>
 
           {errorMsg && (
-            <div className={`notification-bar error${fadingError ? ' nb-fade-out' : ''}`} role="alert">
-              <span className="nb-icon"><User size={18} /></span>
+            <div className={`notification-bar error${fadingError ? ' nb-fade-out' : ''}`} role="alert" style={{ fontSize: '1.15rem' }}>
+              <span className="nb-icon"><User size={20} /></span>
               <span className="nb-text">{errorMsg}</span>
             </div>
           )}
 
           {okMsgRef.current && (
-            <div className="notification-bar info" role="status">
-              <span className="nb-icon"><User size={18} /></span>
+            <div className="notification-bar info" role="status" style={{ fontSize: '1.15rem' }}>
+              <span className="nb-icon"><User size={20} /></span>
               <span className="nb-text">{okMsgRef.current}</span>
             </div>
           )}
@@ -216,13 +216,16 @@ function EditProfile({ user, onUpdateUser, onLogout }) {
       {showModal && (
         <div className="modal-backdrop">
           <div className="modal-box">
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
+              <AlertCircle size={48} color="var(--color-primary)" />
+            </div>
             <p className="modal-title">{tx.edit_modal_q}</p>
             <div className="modal-actions">
-              <button type="button" className="btn--confirm" onClick={handleConfirm}>
-                {tx.modal_yes || 'Sí'}
+              <button type="button" className="btn--confirm btn--field-shape" onClick={handleConfirm} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <CheckCircle size={20} /> {tx.modal_yes || 'Sí'}
               </button>
-              <button type="button" className="btn--cancel" onClick={() => setShowModal(false)}>
-                {tx.modal_no || 'No'}
+              <button type="button" className="btn--cancel btn--field-shape" onClick={() => setShowModal(false)} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ fontSize: '20px', lineHeight: 1 }}>✕</span> {tx.modal_no || 'No'}
               </button>
             </div>
           </div>
@@ -232,16 +235,20 @@ function EditProfile({ user, onUpdateUser, onLogout }) {
       {showDoneModal && (
         <div className="modal-backdrop">
           <div className="modal-box">
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
+              <CheckCircle size={48} color="var(--color-success)" />
+            </div>
             <p className="modal-title">
               {tx.edit_done || 'Dades modificades correctament'}
             </p>
             <div className="modal-actions">
               <button
                 type="button"
-                className="btn--primary"
+                className="btn--primary btn--field-shape"
                 onClick={() => setShowDoneModal(false)}
+                style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
               >
-                OK
+                <CheckCircle size={20} /> OK
               </button>
             </div>
           </div>

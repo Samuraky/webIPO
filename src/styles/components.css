@@ -456,7 +456,7 @@
   color:       var(--color-dark);
   background:  transparent;
 }
-.input-wrapper input::placeholder { color: #666666; }
+.input-wrapper input::placeholder { color: #444444; }
 .input-wrapper input:disabled      { cursor: not-allowed; color: var(--color-text-muted); }
 
 .iw-toggle {
