@@ -96,7 +96,7 @@ export const t = {
 
     /* FinishTransport */
     finish_title: 'FINALITZAR TRANSPORT',
-    finish_truck: 'Tnansport assignat:',
+    finish_truck: 'Transport assignat:',
     finish_info_msg: 'Text no editable: Missatge informatiu',
     finish_km:   'Km Reals:',
     finish_incidents: "Text d'incidències",
