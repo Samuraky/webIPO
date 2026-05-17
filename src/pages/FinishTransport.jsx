@@ -166,9 +166,13 @@ function FinishTransport({ user, driverState, setDriverState, onLogout }) {
           <label className="range-label" htmlFor="kmNum"><Gauge size={20} /> {tx.finish_km}</label>
           <div className="range-row">
             <input
-              type="range" id="kmRange"
-              min={0} max={5000} value={km}
+              type="range"
+              id="kmRange"
+              min={0}
+              max={5000}
+              value={km}
               onChange={e => handleKmChange(e.target.value)}
+              style={{ "--value": `${(km / 5000) * 100}%` }}
             />
             <div className="range-number-box">
               <input
