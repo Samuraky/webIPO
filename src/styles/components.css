@@ -997,6 +997,7 @@ input[type="number"].no-spin { -moz-appearance: textfield; appearance: textfield
   align-items: center;
 }
 .dashboard-truck-img {
+  object-position: left center;
   width: 160px;
   height: 178px;
   object-fit: cover;
