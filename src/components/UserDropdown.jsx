@@ -25,7 +25,7 @@ function UserDropdown({ userName, onLogout }) {
       <button className="user-btn" onClick={() => setOpen(o => !o)}
         aria-haspopup="true" aria-expanded={open}>
         <span>{userName}</span>
-        <User size={15} aria-hidden="true" />
+        <User size={18} aria-hidden="true" />
         <span className="lang-arrow">▾</span>
       </button>
       {open && (
@@ -33,11 +33,11 @@ function UserDropdown({ userName, onLogout }) {
           <div style={{ position: 'fixed', inset: 0, zIndex: 290 }} onClick={() => setOpen(false)} />
           <div className="user-menu">
             <button className="user-menu-item" onClick={handleEdit}>
-              <Settings size={15} />
+              <Settings size={18} />
               {tx.ud_edit}
             </button>
             <button className="user-menu-item" onClick={handleLogout}>
-              <LogOut size={15} />
+              <LogOut size={18} />
               {tx.ud_logout}
             </button>
           </div>

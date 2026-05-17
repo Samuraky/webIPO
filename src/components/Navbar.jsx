@@ -46,7 +46,7 @@ function Navbar({ variant = 'public', userName = 'Conductor', onLogout }) {
           {variant === 'public' && (
             <Link to="/login" className="btn-navbar-login">
               {tx.nav_login}
-              <User size={15} aria-hidden="true" />
+              <User size={18} aria-hidden="true" />
             </Link>
           )}
           {variant === 'driver' && (
