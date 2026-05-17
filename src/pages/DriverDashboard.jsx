@@ -50,9 +50,11 @@ function DriverDashboard({ user, driverState, setDriverState, onLogout }) {
   const pageTransports = allTransports.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   function isToday(dateStr) {
-    // Demo: dia actual és 15/05/2026
-    const today = '15/05/2026';
-    return dateStr === today;
+      // Demo: dia actual és 15/05/2026
+      const today = '15/05/2026';
+      // Extraer solo la parte de fecha (antes del espacio)
+      const dateOnly = dateStr.split(' ')[0];
+      return dateOnly === today;
   }
 
   function handleToggleTruck() {
