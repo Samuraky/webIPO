@@ -55,10 +55,6 @@ function FinishTransport({ user, driverState, setDriverState, onLogout }) {
       showErr(tx.finish_err_km || "Has d'introduir una distància vàlida (major que 0).");
       return;
     }
-    if (!notes || notes.trim() === '') {
-      showErr(tx.finish_err_notes || "Has d'introduir el text de les incidències.");
-      return;
-    }
     setShowModal(true);
   }
 

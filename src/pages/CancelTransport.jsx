@@ -51,8 +51,8 @@ function CancelTransport({ user, driverState, setDriverState, onLogout }) {
   }
 
   function handleRequestConfirm() {
-    if (km <= 0) {
-      showErr(tx.cancel_err_km || "Has d'introduir una distància vàlida (major que 0).");
+    if (km < 0) {
+      showErr(tx.cancel_err_km || "Has d'introduir una distància vàlida.");
       return;
     }
     if (!reason || reason.trim() === '') {
