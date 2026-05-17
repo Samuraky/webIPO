@@ -48,6 +48,7 @@ function EditProfile({ user, onUpdateUser, onLogout }) {
   }
 
   function showError(msg) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     setFadingError(false);
     setErrorMsg(msg);
     clearTimeout(errorTimer.current);
@@ -71,30 +72,28 @@ function EditProfile({ user, onUpdateUser, onLogout }) {
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
-    if (!form.address || !form.phone || !form.email) {
-      showError(tx.edit_err_missing || 'Falten dades per informar.');
-      return;
-    }
-    setShowModal(true);
+  e.preventDefault();
+
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email);
+
+  if (!form.address || !form.phone || !form.email) {
+    showError(tx.edit_err_missing || 'Falten dades per informar.');
+    return;
   }
 
-  function handleConfirm() {
-    setShowModal(false);
-
-    const updatedUser = {
-      ...user,
-      ...form,
-      photo: photoPreview,
-      licenseImage: carnetPreview,
-    };
-
-    showSuccess(tx.edit_done || 'Dades modificades correctament');
-
-    setTimeout(() => {
-      if (onUpdateUser) onUpdateUser(updatedUser);
-    }, 4000);
+  if (!emailOk) {
+    showError('Email no válido');
+    return;
   }
+
+  setShowModal(true);
+}
+
+function handleConfirm() {
+  setShowModal(false);
+  setShowDoneModal(true);
+
+}
   return (
     <div className="page-wrapper">
       <Navbar variant="driver" userName={user?.name || 'Conductor'} onLogout={onLogout} />
@@ -151,7 +150,7 @@ function EditProfile({ user, onUpdateUser, onLogout }) {
               <div className="input-wrapper">
                 <span className="iw-icon"><Phone size={18} /></span>
                 <input type="tel" id="phone" autoComplete="tel" placeholder={tx.edit_phone_ph}
-                  value={form.phone} onChange={e => handleChange('phone', e.target.value)} />
+                  value={form.phone} onChange={e => {const onlyNumbers = e.target.value.replace(/\D/g, ''); handleChange('phone', onlyNumbers);}} />
               </div>
             </div>
 
@@ -245,9 +244,19 @@ function EditProfile({ user, onUpdateUser, onLogout }) {
               <button
                 type="button"
                 className="btn--confirm btn--field-shape"
-                onClick={() => setShowDoneModal(false)}
-                style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
-              >
+                onClick={() => {
+                  onUpdateUser?.({
+                    ...user,
+                    ...form,
+                    photo: photoPreview,
+                    licenseImage: carnetPreview,
+                  });
+
+                  setShowDoneModal(false);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                }}
+                style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <CircleCheckBig size={20} /> OK
               </button>
             </div>
