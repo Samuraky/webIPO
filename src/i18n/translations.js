@@ -7,7 +7,7 @@ export const t = {
     /* Breadcrumb */
     bread_home:         'Inici',
     bread_login:        'Login',
-    bread_dash:         'Dashboard',
+    bread_dash:         'Tauler de control',
     bread_login_title:  'Iniciar sessió',
     bread_recover_title:'Recuperar contrasenya',
     bread_finish_title: 'Finalitzar transport',
@@ -149,7 +149,7 @@ export const t = {
     /* Breadcrumb */
     bread_home:         'Inicio',
     bread_login:        'Login',
-    bread_dash:         'Dashboard',
+    bread_dash:         'Panel de control',
     bread_login_title:  'Iniciar sesión',
     bread_recover_title:'Recuperar contraseña',
     bread_finish_title: 'Finalizar transporte',
