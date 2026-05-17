@@ -39,7 +39,7 @@ function FinishTransport({ user, driverState, setDriverState, onLogout }) {
   function showErr(msg) {
     setErrMsg(msg);
     clearTimeout(errTimer.current);
-    errTimer.current = setTimeout(() => setErrMsg(''), 4000);
+    errTimer.current = setTimeout(() => setErrMsg(''), 15000);
   }
 
   function handleKmChange(val) {
