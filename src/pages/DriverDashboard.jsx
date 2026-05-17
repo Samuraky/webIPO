@@ -28,6 +28,7 @@ function DriverDashboard({ user, driverState, setDriverState, onLogout }) {
 
   function showErr(msg) {
     setErrMsg(msg);
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // 👈 ESTO
     clearTimeout(errTimer.current);
     errTimer.current = setTimeout(() => setErrMsg(''), 4000);
   }
