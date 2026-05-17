@@ -51,8 +51,8 @@ function CancelTransport({ user, driverState, setDriverState, onLogout }) {
   }
 
   function handleRequestConfirm() {
-    if (km < 0) {
-      showErr(tx.cancel_err_km || "La distància no pot ser negativa.");
+    if (km <= 0) {
+      showErr(tx.cancel_err_km || "Has d'introduir una distància vàlida (major que 0).");
       return;
     }
     if (!reason || reason.trim() === '') {
@@ -109,7 +109,7 @@ function CancelTransport({ user, driverState, setDriverState, onLogout }) {
 
         {/* ── Info camió ── */}
         <section className="truck-info-card" aria-label="Informació del camió">
-          <p className="tic-header"><Truck size={20} /> {tx.field_transport}</p>
+          <p className="tic-header"><Truck size={20} /> {tx.finish_truck}</p>
           <div style={{ display: 'flex', gap: 'var(--sp-4)', alignItems: 'center', flexWrap: 'wrap' }}>
             <div className="tic-grid" style={{ flex: 1, minWidth: '15rem' }}>
               <div className="info-field">
