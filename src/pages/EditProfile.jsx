@@ -4,8 +4,10 @@ import { ChevronLeft, User, MapPin, Phone, Mail, Lock, Eye, EyeOff, FileImage, A
 import Navbar from '../components/Navbar';
 import { useLang } from '../context/LangContext';
 import { t } from '../i18n/translations';
+import { useLocation } from 'react-router-dom';
 
 function EditProfile({ user, onUpdateUser, onLogout }) {
+  const location = useLocation();
   const navigate = useNavigate();
   const { lang } = useLang();
   const tx = t[lang];
@@ -31,7 +33,12 @@ function EditProfile({ user, onUpdateUser, onLogout }) {
   const errorTimer = useRef(null);
   const okTimer = useRef(null);
   const okMsgRef = useRef('');
+  const previousPage = location.state?.from || '/dashboard';
 
+  function goBack() {
+    navigate(previousPage);
+  }
+  
   useEffect(() => () => {
     clearTimeout(errorTimer.current);
     clearTimeout(okTimer.current);
@@ -101,7 +108,7 @@ function EditProfile({ user, onUpdateUser, onLogout }) {
       <main className="page-content" style={{ maxWidth: '42rem', margin: '0 auto', padding: 'var(--sp-6) 1rem' }}>
 
         <div style={{ marginBottom: '1.5rem' }}>
-          <button className="btn--back" onClick={() => navigate('/dashboard')}>
+          <button className="btn--back" onClick={goBack}>
             <ChevronLeft size={15} /> {tx.btn_back}
           </button>
         </div>
