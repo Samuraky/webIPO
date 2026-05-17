@@ -1258,3 +1258,21 @@ input[type="number"].no-spin { -moz-appearance: textfield; appearance: textfield
   overflow: hidden; background: var(--color-light3);
 }
 .img-upload-area img { width: 100%; height: 100%; object-fit: cover; }
+
+
+#kmRange {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  border: 1px solid black;
+
+  background: linear-gradient(
+    to right,
+    #575799 0%,
+    #575799 var(--value, 0%),
+    #DDDDFF var(--value, 0%),
+    #DDDDFF 100%
+  );
+}
